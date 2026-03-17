@@ -1,0 +1,758 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    citecolor=blue!60!black,
+    urlcolor=blue!60!black
+}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+% ── Custom commands ───────────────────────────────────────
+\newcommand{\Hfour}{H_4}
+\newcommand{\Hthree}{H_3}
+\newcommand{\Htwo}{H_2}
+\newcommand{\Eeight}{E_8}
+\newcommand{\vphi}{\varphi}
+\newcommand{\Lmat}{L_{H_4}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtheorem{invariant}{Invariant}
+\newtheorem{proposition}{Proposition}
+
+% ── Title ─────────────────────────────────────────────────
+\title{%
+  \textbf{Algebraic Invariants of the $\Hfour$ Laplacian Spectrum}\\[6pt]
+  \large Part~II of a Series on Symmetry-Constrained Resonant Structure%
+}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{\today}
+
+% ══════════════════════════════════════════════════════════
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+% ── Abstract ──────────────────────────────────────────────
+\begin{abstract}
+The graph Laplacian of the 600-cell --- the terminal regular polytope
+of the non-crystallographic Coxeter family~$H_n$ --- possesses a
+spectrum of exceptional algebraic regularity.  Across 120~degrees of
+freedom, only nine distinct eigenvalues appear.  The associated
+multiplicities include the perfect-square sequence
+$(1,4,9,16,25,36)$, the irrational eigenvalues occur in Galois
+conjugate pairs anchored at the graph degree~$k=12$, and the total
+$\vphi$-content of the spectrum cancels exactly.  This paper
+identifies and formalizes seven structural invariants governing this
+spectrum, relates them to the harmonic structure of the 3-sphere~$S^3$,
+and discusses their algebraic origin in terms of the distance-regular
+geometry and symmetry algebra of the 600-cell graph.  These invariants
+are shown to be consistent with the coherent nonlinear dynamics
+reported in Part~I of this series.
+\end{abstract}
+
+\vspace{1em}
+\noindent\textbf{Keywords:}
+Coxeter groups, $\Hfour$ symmetry, 600-cell, graph Laplacian,
+spectral invariants, algebraic graph theory, golden ratio,
+hyperspherical harmonics.
+
+\newpage
+\tableofcontents
+\newpage
+
+
+% ══════════════════════════════════════════════════════════
+\section{Introduction}\label{sec:intro}
+% ══════════════════════════════════════════════════════════
+
+In Part~I of this series~\cite{paper1}, the 600-cell was introduced as a
+geometric substrate for a nonlinear field model constrained by the
+symmetry of the Coxeter group~$\Hfour$.  The Laplacian spectrum of the
+600-cell graph was computed numerically and found to contain only nine
+distinct eigenvalues across 120~degrees of freedom.  Numerical
+simulations demonstrated that the spectral compression produces
+persistent localisation, coherent shell reflection, and recurrent
+breathing dynamics that are absent in degree-matched control graphs.
+
+The present paper studies the internal organization of this
+nine-sector Laplacian spectrum.  Rather than treating the eigenvalues
+as numerical data, we analyze their algebraic structure and identify a
+set of seven structural invariants that govern the spectrum.
+
+These invariants are not assumed; they are extracted from the computed
+spectrum and verified exactly.  They concern:
+\begin{enumerate}[nosep]
+\item the cancellation of golden-ratio content across eigenvalues,
+\item the anchoring of irrational eigenvalues at the graph degree,
+\item the pairing structure of Galois conjugate eigenvalues,
+\item the folding of multiplicities from a perfect-square sequence,
+\item the partition of modes into three $\vphi$-zones,
+\item the decomposition of the spectral backbone,
+\item the structure of the discrete departure from spherical harmonics.
+\end{enumerate}
+
+These invariants are mutually consistent and arise simultaneously from
+the same spectral data; none is imposed independently.
+
+Together these invariants suggest that the 600-cell Laplacian
+spectrum is far more algebraically constrained than a generic
+graph spectrum, and they are consistent with the dynamical phenomena
+reported in Part~I.
+
+For convenience, these invariants will sometimes be referred to
+informally as the ``seven laws'' of the $\Hfour$ spectrum, without
+implying independence or axiomatic status.
+
+The focus of the present work is strictly algebraic.  No physical
+interpretation is assumed.  The goal is to identify structural
+constraints of the $\Hfour$ Laplacian spectrum and to determine whether
+these constraints arise from known algebraic or geometric principles.
+
+
+% ══════════════════════════════════════════════════════════
+\section{Spectral Data of the 600-Cell Graph}\label{sec:data}
+% ══════════════════════════════════════════════════════════
+
+The 600-cell is a regular convex 4-polytope with 120~vertices,
+720~edges, 1200~triangular faces, and 600~tetrahedral cells.  Its
+graph is 12-regular and vertex-transitive under the Coxeter
+group~$\Hfour$ of order~14\,400.
+
+The graph Laplacian is defined as $\Lmat = 12I - A$, where $A$ is
+the $120 \times 120$ adjacency matrix.  The eigenvalues of~$\Lmat$
+are listed in Table~\ref{tab:spectrum}.
+
+\begin{table}[H]
+\centering
+\caption{Eigenvalues and multiplicities of the 600-cell graph
+Laplacian $\Lmat = 12I - A$.}
+\label{tab:spectrum}
+\begin{tabular}{@{}cllrl@{}}
+\toprule
+Sector & Exact form & $\vphi$-basis ($a+b\vphi$) & Mult.\ $d_k$ & Note \\
+\midrule
+1 & $0$ & $0 + 0\vphi$ & 1 & $= 1^2$ \\
+2 & $9 - 3\sqrt{5}$ & $12 - 6\vphi$ & 4 & $= 2^2$ \\
+3 & $10 - 2\sqrt{5}$ & $12 - 4\vphi$ & 9 & $= 3^2$ \\
+4 & $9$ & $9 + 0\vphi$ & 16 & $= 4^2$ \\
+5 & $12$ & $12 + 0\vphi$ & 25 & $= 5^2$ \\
+6 & $14$ & $14 + 0\vphi$ & 36 & $= 6^2$ \\
+7 & $10 + 2\sqrt{5}$ & $8 + 4\vphi$ & 9 & \\
+8 & $15$ & $15 + 0\vphi$ & 16 & \\
+9 & $9 + 3\sqrt{5}$ & $6 + 6\vphi$ & 4 & \\
+\bottomrule
+\addlinespace
+\multicolumn{5}{@{}l}{\footnotesize
+  $\sum d_k = 120$.  Conversion: $\sqrt{5} = 2\vphi - 1$.
+  All eigenvalues lie in $\Q(\sqrt{5}\,)$.}
+\end{tabular}
+\end{table}
+
+The spectrum is computed exactly and all algebraic expressions are
+verified symbolically within~$\Q(\sqrt{5}\,)$.  All multiplicities
+and algebraic identities were cross-checked against numerical
+eigendecomposition to machine precision.
+
+Every eigenvalue can be written in the form $\mu = a + b\vphi$ where
+$a \in \Z$ and $b \in \{-6,-4,0,4,6\}$.  The four irrational
+eigenvalues form two Galois conjugate pairs under the automorphism
+$\sqrt{5} \mapsto -\sqrt{5}$:
+\begin{align}
+  \text{Pair 1:} &\quad (9 - 3\sqrt{5},\; 9 + 3\sqrt{5})
+    \qquad \text{sum} = 18,\; \text{product} = 36, \label{eq:pair1} \\
+  \text{Pair 2:} &\quad (10 - 2\sqrt{5},\; 10 + 2\sqrt{5})
+    \qquad \text{sum} = 20,\; \text{product} = 80. \label{eq:pair2}
+\end{align}
+
+
+% ══════════════════════════════════════════════════════════
+\section{The Seven Structural Invariants}\label{sec:invariants}
+% ══════════════════════════════════════════════════════════
+
+We now state the seven structural invariants of the spectrum.  Each
+invariant is presented with an observation, exact statement, minimal
+statement, interpretation, derivation status, type classification, and
+implication.
+
+% ── Invariant 1 ──────────────────────────────────────────
+\begin{invariant}[$\vphi$-Cancellation]\label{inv:phi}
+
+\emph{Observation.}
+The irrational components of the spectrum appear symmetrically:
+$9 \pm 3\sqrt{5}$ and $10 \pm 2\sqrt{5}$, and cancel when summed.
+
+\emph{Exact statement.}
+Decomposing each eigenvalue as $\mu_k = \mu_k^{(\Q)} + \mu_k^{(\sqrt{5})}$
+into rational and irrational parts,
+\begin{equation}\label{eq:phi_cancel}
+  \sum_{k=1}^{9} \mu_k^{(\sqrt{5})} = 0
+  \qquad\text{and}\qquad
+  \sum_{k=1}^{9} d_k \, \mu_k^{(\sqrt{5})} = 0.
+\end{equation}
+
+\emph{Verification.}
+The irrational parts are $\{-3\sqrt{5},\; -2\sqrt{5},\; 0,\; 0,\; 0,\;
+0,\; 0,\; +2\sqrt{5},\; +3\sqrt{5}\}$, summing to zero.
+Multiplicity-weighted: $(-3\sqrt{5})(4) + (-2\sqrt{5})(9) +
+(2\sqrt{5})(9) + (3\sqrt{5})(4) = 0$.
+
+\emph{Minimal statement.}
+$\sum b_k = 0$ and $\sum b_k d_k = 0$.
+
+\emph{Interpretation.}
+The spectrum is invariant under the Galois conjugation
+$\sqrt{5} \mapsto -\sqrt{5}$.  This is consistent with the Laplacian
+spectrum lying in the number field~$\Q(\sqrt{5}\,)$ and being closed
+under its Galois group.  The cancellation is a field symmetry
+constraint, not a numerical coincidence.
+
+\emph{Status:} Exact (algebraic). \quad
+\textbf{Type:} Galois symmetry constraint.
+
+\emph{Implication.}
+The spectrum is closed under algebraic conjugation, restricting
+the set of possible eigenvalue structures.
+\end{invariant}
+
+% ── Invariant 2 ──────────────────────────────────────────
+\begin{invariant}[Degree Anchoring]\label{inv:degree}
+
+\emph{Observation.}
+The graph degree $k = 12$ appears as an eigenvalue and serves as the
+central reference point of the spectrum.
+
+\emph{Exact statement.}
+The Laplacian is defined by $\Lmat = kI - A$ with $k = 12$.  The
+value $\mu = 12$ is one of the nine distinct eigenvalues.  Furthermore,
+for every eigenvalue with negative $\vphi$-coefficient ($b_k < 0$),
+the rational part satisfies $a_k = k = 12$.
+
+\emph{Verification.}
+Sector~2: $\mu = 12 - 6\vphi$, $a = 12$.
+Sector~3: $\mu = 12 - 4\vphi$, $a = 12$.
+
+\emph{Minimal statement.}
+$b_k < 0 \implies a_k = 12$.
+
+\emph{Interpretation.}
+The degree acts as a spectral anchor.  All irrational eigenvalues
+are organised relative to this fixed combinatorial constraint.  The
+$k = 12$ regularity of the graph determines the reference frame of
+the spectrum.
+
+\emph{Status:} Exact (follows from Laplacian definition and spectral
+data). \quad \textbf{Type:} Algebraic (combinatorial anchor).
+
+\emph{Implication.}
+The spectrum is organised relative to the fixed combinatorial
+constraint $k = 12$.
+\end{invariant}
+
+% ── Invariant 3 ──────────────────────────────────────────
+\begin{invariant}[Conjugate Pairing]\label{inv:conj}
+
+\emph{Observation.}
+All irrational eigenvalues appear in Galois conjugate pairs with equal
+multiplicities.
+
+\emph{Exact statement.}
+If $\lambda = a + b\sqrt{5}$ appears in the spectrum with
+multiplicity~$d$, then $\lambda' = a - b\sqrt{5}$ also appears with
+multiplicity~$d$.
+
+\emph{Verification.}
+Pair~1: $9 - 3\sqrt{5}$ and $9 + 3\sqrt{5}$, both multiplicity~4.
+Pair~2: $10 - 2\sqrt{5}$ and $10 + 2\sqrt{5}$, both multiplicity~9.
+
+\emph{Minimal statement.}
+$\mu \in \mathrm{Spec}(\Lmat)$ irrational $\implies$
+$\bar\mu \in \mathrm{Spec}(\Lmat)$ with $d(\mu) = d(\bar\mu)$.
+
+\emph{Interpretation.}
+The spectrum respects the Galois symmetry of
+$\Q(\sqrt{5}\,)/\Q$.  This is consistent with the underlying algebra
+generating the spectrum being defined over~$\Q(\sqrt{5}\,)$ and
+with the $\vphi$-geometry of the non-crystallographic Coxeter family.
+
+\emph{Status:} Exact (spectral property). \quad
+\textbf{Type:} Galois symmetry constraint.
+
+\emph{Implication.}
+Eigenvalues are constrained by number field symmetry, reducing the
+set of possible spectral forms.
+\end{invariant}
+
+% ── Invariant 4 ──────────────────────────────────────────
+\begin{invariant}[Square Multiplicity Folding]\label{inv:fold}
+
+\emph{Observation.}
+The first six multiplicities follow a perfect-square sequence; the
+upper three fold back to earlier values.
+
+\emph{Exact statement.}
+\begin{equation}\label{eq:fold}
+  d_\ell = (\ell+1)^2, \qquad \ell = 0,1,\ldots,5,
+\end{equation}
+giving $d_1,\ldots,d_6 = 1, 4, 9, 16, 25, 36$.  The remaining
+multiplicities are
+\begin{equation}\label{eq:upper}
+  d_7 = 9 = 3^2, \quad d_8 = 16 = 4^2, \quad d_9 = 4 = 2^2.
+\end{equation}
+
+\emph{Verification.}
+$d_7 = 9 = d_3$, $d_8 = 16 = d_4$, $d_9 = 4 = d_2$.
+
+\emph{Minimal statement.}
+$d_k = (k)^2$ for $k = 1,\ldots,6$; \;
+$d_7 = d_3$, $d_8 = d_4$, $d_9 = d_2$.
+
+\emph{Interpretation.}
+The $(\ell+1)^2$ pattern matches the degeneracies of hyperspherical
+harmonics on~$S^3$.  This is consistent with the interpretation that
+the 600-cell graph encodes a finite, symmetry-reduced discrete
+analogue of~$S^3$ harmonic structure.  The upper multiplicities
+represent a fold-back where the finite graph cannot support higher
+harmonics.
+
+\emph{Status:} Empirical (strong structural match; derivation from
+$\Hfour$ representation theory is an open problem). \quad
+\textbf{Type:} Combinatorial (multiplicity pattern).
+
+\emph{Implication.}
+The 600-cell graph appears to encode a symmetry-reduced discrete
+analogue of~$S^3$ harmonic structure.  No comparable square-folding
+pattern is observed in generic regular graphs of similar size and
+degree.
+\end{invariant}
+
+% ── Invariant 5 ──────────────────────────────────────────
+\begin{invariant}[Three-Zone Partition]\label{inv:zones}
+
+\emph{Observation.}
+The spectrum splits into three zones by $\vphi$-content, with
+symmetric outer zones.
+
+\emph{Exact statement.}
+Define the spectral partition
+\begin{equation}\label{eq:zones}
+  \mathcal{S} =
+  \mathcal{S}_{-} \cup \mathcal{S}_{0} \cup \mathcal{S}_{+}
+\end{equation}
+where $\mathcal{S}_{-}$ contains eigenvalues with $b < 0$,
+$\mathcal{S}_{0}$ contains those with $b = 0$, and
+$\mathcal{S}_{+}$ contains those with $b > 0$.  Then:
+\begin{align}
+  |\mathcal{S}_{-}| &= 13 \text{ modes}
+    \quad (2 \text{ eigenvalues}), \\
+  |\mathcal{S}_{0}| &= 94 \text{ modes}
+    \quad (5 \text{ eigenvalues}), \\
+  |\mathcal{S}_{+}| &= 13 \text{ modes}
+    \quad (2 \text{ eigenvalues}).
+\end{align}
+
+\emph{Verification.}
+$13 + 94 + 13 = 120$.  $|\mathcal{S}_{-}| = |\mathcal{S}_{+}| = 13$.
+
+\emph{Minimal statement.}
+$|\mathcal{S}_{-}| = |\mathcal{S}_{+}| = 13$; \;
+$|\mathcal{S}_{0}| = 94$; \; $13 + 94 + 13 = 120$.
+
+\emph{Interpretation.}
+The spectrum is not uniform but organised into symmetry-related
+sectors.  The outer zones behave symmetrically, carrying the
+$\vphi$-geometry.  The middle zone carries the bulk rational
+structure.  This stratification is consistent with the Galois
+symmetry of~$\Q(\sqrt{5}\,)/\Q$.
+
+\emph{Status:} Exact (direct count; formal derivation from
+representation theory is an open problem). \quad
+\textbf{Type:} Algebraic (Galois partition).
+
+\emph{Implication.}
+The spectrum is organised into symmetry-related sectors rather
+than distributed uniformly.
+\end{invariant}
+
+% ── Invariant 6 ──────────────────────────────────────────
+\begin{invariant}[Spectral Backbone]\label{inv:backbone}
+
+\emph{Observation.}
+A dominant subset of the spectrum carries the majority of the
+multiplicity and admits a specific arithmetic decomposition.
+
+\emph{Exact statement.}
+The sum of rational parts of all distinct eigenvalues is
+\begin{equation}\label{eq:backbone}
+  \sum_{k=1}^{9} a_k = 88.
+\end{equation}
+This equals the sum of the nine distinct eigenvalues (by
+Invariant~\ref{inv:phi}).  It decomposes as
+\begin{equation}\label{eq:87}
+  88 = 1 + 87 = 1 + 3 \times 29.
+\end{equation}
+
+There exists a dominant spectral backbone~$\mathcal{B}$ (the lower
+six sectors, containing $91$~modes) such that
+$\sum_{k \in \mathcal{B}} d_k \gg
+ \sum_{k \notin \mathcal{B}} d_k$.
+
+\emph{Minimal statement.}
+$\sum a_k = 88 = 1 + 3 \times 29$.
+
+\emph{Interpretation.}
+The spectrum has a core subspace following the $S^3$ harmonic pattern
+and a residual upper structure.  Nonlinear dynamics are expected to be
+governed primarily by backbone modes.
+
+\emph{Status:} Exact (arithmetic). \quad
+\textbf{Type:} Algebraic (arithmetic decomposition).
+
+\emph{Implication.}
+The spectral backbone determines the dominant dynamical channels.
+The backbone is defined purely spectrally and does not rely on any
+geometric embedding.
+\end{invariant}
+
+% ── Invariant 7 ──────────────────────────────────────────
+\begin{invariant}[Departure Structure]\label{inv:departure}
+
+\emph{Observation.}
+The residual eigenvalues outside the backbone form a structured set.
+
+\emph{Exact statement.}
+The spectrum decomposes as
+$\mathcal{S} = \mathcal{B} \cup \mathcal{D}$, where
+$\mathcal{B}$ is the backbone (lower six sectors, 91~modes) and
+$\mathcal{D}$ is the departure (upper three sectors):
+\begin{equation}\label{eq:29}
+  |\mathcal{D}| = d_7 + d_8 + d_9 = 9 + 16 + 4 = 29.
+\end{equation}
+The departure is itself structured: $29 = 3^2 + 4^2 + 2^2$.
+
+\emph{Verification.}
+$91 + 29 = 120 = n$. \ $\checkmark$
+
+\emph{Minimal statement.}
+$d_7 + d_8 + d_9 = 29 = 3^2 + 4^2 + 2^2$; \; $91 + 29 = 120$.
+
+\emph{Interpretation.}
+The departure modes represent the deviation from the idealised
+$S^3$ harmonic structure.  They correspond to finite-graph
+corrections: the modes where the discrete 600-cell geometry
+departs from a smooth 3-sphere.  Their structured decomposition
+into perfect squares is consistent with an underlying
+representation-theoretic origin.
+
+\emph{Status:} Exact (count); interpretation is partially derived. \quad
+\textbf{Type:} Combinatorial (structured residual).
+
+\emph{Implication.}
+The spectrum separates into idealised harmonic structure plus
+structured correction terms.
+\end{invariant}
+
+\bigskip
+
+The seven invariants described above do not constitute independent
+assumptions, but rather appear as interrelated structural properties
+of the $\Hfour$ Laplacian spectrum.  Their simultaneous presence
+suggests that the spectrum is governed by a highly constrained
+algebraic organisation rather than arising generically.
+
+
+% ══════════════════════════════════════════════════════════
+\section{Relation to Harmonic Structure on \texorpdfstring{$S^3$}{S³}}
+\label{sec:harmonics}
+% ══════════════════════════════════════════════════════════
+
+The vertices of the 600-cell lie on the unit 3-sphere
+$S^3 \subset \R^4$.  The Laplace--Beltrami operator on the continuous
+$S^3$ has eigenvalues $\ell(\ell+2)$ with degeneracies $(\ell+1)^2$ for
+$\ell = 0, 1, 2, \ldots$~\cite{vilenkin1993}.
+
+The first six multiplicities of the 600-cell Laplacian ---
+$1, 4, 9, 16, 25, 36$ --- exactly match $(\ell+1)^2$ for
+$\ell = 0, 1, 2, 3, 4, 5$.  This is consistent with the interpretation
+that the low-lying eigenmodes of the 600-cell graph correspond to
+restrictions of $S^3$ hyperspherical harmonics to the 120-vertex
+discretisation.
+
+For $\ell \geq 6$ the pattern breaks.  A smooth $S^3$ would yield
+degeneracies $49, 64, 81, \ldots$, but the finite graph instead
+produces $9, 16, 4$.  The discrete structure cannot support harmonics
+of arbitrarily high angular momentum; the upper modes fold back to
+lower multiplicities (Invariant~\ref{inv:fold}).
+
+We emphasise that this correspondence is structural rather than exact.
+The 600-cell graph does not reproduce the full Laplace--Beltrami operator
+on~$S^3$, but appears to encode a finite, symmetry-constrained
+truncation.
+
+This suggests that the 600-cell graph acts as a finite,
+symmetry-reduced harmonic truncation of~$S^3$.  The truncation is not
+arbitrary: it is governed by the $\Hfour$ symmetry and produces the
+specific fold-back pattern described in Invariant~\ref{inv:fold}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{fig_harmonic_hint_s3.png}
+\caption{Multiplicities of the 600-cell Laplacian compared with the
+$(\ell+1)^2$ degeneracy pattern of $S^3$ hyperspherical harmonics.
+The first six sectors match exactly; the upper three fold back.}
+\label{fig:harmonics}
+\end{figure}
+
+
+% ══════════════════════════════════════════════════════════
+\section{Algebraic Interpretation of the Invariants}
+\label{sec:algebra}
+% ══════════════════════════════════════════════════════════
+
+The seven invariants are not independent observations; they arise from
+a common algebraic source.
+
+\subsection{Number-Theoretic Structure}
+
+All eigenvalues lie in the number field $\Q(\sqrt{5}\,)$, the minimal
+extension of the rationals containing the golden ratio.  The irrational
+eigenvalues satisfy the minimal polynomials
+\begin{align}
+  x^2 - 18x + 36 &= 0 \qquad \text{(roots: } 9 \pm 3\sqrt{5}\text{)},
+    \label{eq:minpoly1} \\
+  x^2 - 20x + 80 &= 0 \qquad \text{(roots: } 10 \pm 2\sqrt{5}\text{)}.
+    \label{eq:minpoly2}
+\end{align}
+The Galois group $\mathrm{Gal}(\Q(\sqrt{5}\,)/\Q) \cong \Z/2\Z$
+acts by $\sqrt{5} \mapsto -\sqrt{5}$, which exchanges the members of
+each conjugate pair while preserving eigenspace dimensions
+(Invariant~\ref{inv:conj}).  The $\vphi$-cancellation
+(Invariant~\ref{inv:phi}) is a necessary consequence of this Galois
+symmetry applied to the trace.  Thus the spectrum is invariant under
+the action of $\mathrm{Gal}(\Q(\sqrt{5}\,)/\Q)$.
+
+\subsection{Graph-Theoretic Structure}
+
+The 600-cell graph is vertex-transitive and has palindromic distance
+shells $(1, 12, 32, 42, 32, 1)$ with diameter~5.  Numerical
+investigation shows that the graph is \emph{not} distance-regular:
+the intersection numbers are not constant at distances 2, 3, and~4.
+Consequently the distance matrices do not close under multiplication,
+and the graph does not admit a classical Bose--Mesner algebra of
+dimension $d+1 = 6$.
+
+This is consistent with the spectrum containing \emph{nine} distinct
+eigenvalues rather than six (which would be expected for a
+distance-regular graph of diameter~5).  The additional three eigenvalues
+reflect the richer symmetry structure of the $\Hfour$ automorphism
+group acting on the graph.  However, the palindromic shell structure
+suggests a partial distance symmetry that is not captured by classical
+distance-regular graph theory.
+
+\subsection{Representation-Theoretic Perspective}
+
+The adjacency matrix of the 600-cell commutes with the permutation
+representation of~$\Hfour$ on $\R^{120}$.  The eigenspaces of the
+Laplacian therefore decompose into irreducible representations
+of~$\Hfour$.  The existence of nine distinct eigenvalues suggests that the
+permutation representation of~$\Hfour$ on~$\R^{120}$ decomposes into
+nine invariant subspaces, corresponding to nine irreducible components.
+This decomposition is constrained by the commutation of the Laplacian
+with the group action.
+
+The multiplicities $d_k$ are the dimensions of these irreducible
+representations.  The observation that the first six multiplicities
+follow $(\ell+1)^2$ is consistent with the branching rules from the
+continuous group $\mathrm{SO}(4)$ to the discrete subgroup~$\Hfour$.
+A complete derivation of the irreducible decomposition from the
+character table of~$\Hfour$ (which has 34~conjugacy classes) remains
+an open problem.
+
+The observed invariants suggest that the $\Hfour$ Laplacian spectrum
+is governed by a highly constrained finite spectral algebra whose
+structure is determined by the interplay between the non-crystallographic
+Coxeter symmetry and the $\vphi$-geometry of the underlying polytope.
+
+
+% ══════════════════════════════════════════════════════════
+\section{Relation to the Dynamics of Part~I}\label{sec:dynamics}
+% ══════════════════════════════════════════════════════════
+
+The structural invariants identified in this paper are properties of
+the static Laplacian spectrum, not dynamical claims.  However, they
+provide a structural mechanism consistent with the dynamical phenomena
+reported in Part~I~\cite{paper1}.
+
+\begin{itemize}[nosep]
+\item \textbf{Spectral confinement} follows from the small number of
+  distinct eigenvalues (nine sectors rather than 120), which is itself
+  a consequence of the $\Hfour$ symmetry
+  (Invariants~\ref{inv:fold},~\ref{inv:zones}).
+
+\item \textbf{Shell reflection} is enabled by the palindromic distance
+  shells, which provide a symmetric propagation channel.  The spectral
+  backbone (Invariant~\ref{inv:backbone}) determines the available
+  resonance channels.
+
+\item \textbf{Recurrent localisation} arises from the finite
+  beat-frequency algebra: nine sectors produce only $\binom{9}{2} = 36$
+  beat frequencies, which are sparse enough for periodic constructive
+  interference.
+
+\item \textbf{Breather formation} depends on the degenerate eigenspace
+  structure (Invariant~\ref{inv:conj}), not merely on the eigenvalue
+  spectrum, as demonstrated by the isospectral surrogate experiments
+  of Part~I.
+\end{itemize}
+
+These invariants therefore provide a structural mechanism consistent
+with the unusually coherent nonlinear dynamics observed on the $\Hfour$
+shell.  The invariants constrain the space of possible dynamics, rather
+than determining a unique dynamical outcome.  No dynamical assumptions
+are required for these spectral constraints to hold.
+
+
+% ══════════════════════════════════════════════════════════
+\section{Discussion}\label{sec:discussion}
+% ══════════════════════════════════════════════════════════
+
+The structure identified here appears to be highly non-generic within
+the space of 12-regular graphs on 120~vertices.  The Laplacian spectrum of the
+600-cell graph is too structured to be generic.  A random 12-regular graph on 120~vertices would typically
+produce 120~distinct eigenvalues with no algebraic relationships among
+them.  The 600-cell produces nine, organized by conjugate pairing,
+anchored at the degree, obeying a perfect-square sequence for six
+sectors, and exhibiting exact $\vphi$-cancellation.
+
+These invariants appear to arise from the exceptional position of the
+600-cell at the terminus of the non-crystallographic Coxeter family.
+The $H_n$ symmetry hierarchy terminates at $\Hfour$; there is no
+analogous regular polytope in dimension five or higher.  The 600-cell
+is therefore the most complex regular structure this symmetry family
+can produce, and its Laplacian spectrum reflects this maximality.
+
+Several questions remain open:
+\begin{enumerate}[nosep]
+\item Can the nine eigenvalues and their multiplicities be derived
+  analytically from the character table of~$\Hfour$?
+\item Does the fold-back pattern (Invariant~\ref{inv:fold}) have a
+  representation-theoretic explanation in terms of branching rules from
+  $\mathrm{SO}(4)$ to~$\Hfour$?
+\item Is there a closed-form expression for the intersection array or
+  an extended Bose--Mesner-like algebra that accounts for all nine
+  eigenvalues?
+\item Do the invariants extend or modify when the $\Hfour$ root system
+  is embedded in the $\Eeight$ lattice (which decomposes as
+  $240 = 2 \times 120$ roots)?
+\end{enumerate}
+
+
+% ══════════════════════════════════════════════════════════
+\section{Conclusion}\label{sec:conclusion}
+% ══════════════════════════════════════════════════════════
+
+The 600-cell graph Laplacian spectrum exhibits a set of nontrivial
+algebraic invariants that organize its nine eigenvalues and their
+multiplicities into a highly constrained structure.  The
+$\vphi$-cancellation, degree anchoring, conjugate pairing,
+square-multiplicity folding, three-zone partition, spectral backbone,
+and departure structure collectively demonstrate that this spectrum is
+far more ordered than that of a generic graph with the same size and
+degree.
+
+These invariants arise from the exceptional symmetry of the $\Hfour$
+Coxeter group and the $\vphi$-geometry of the 600-cell polytope.  They
+motivate deeper work on the exact algebraic derivation of the spectrum
+from the representation theory of~$\Hfour$, and they provide the
+structural description consistent with the dynamical phenomena
+reported in Part~I of this series.  The results motivate the search for
+an exact algebraic derivation of the $\Hfour$ Laplacian spectrum from
+representation-theoretic principles.  In particular, the coexistence of
+Galois symmetry, square multiplicity structure, and spectral compression
+in a single finite graph appears to be rare and warrants further
+classification.
+
+\paragraph{Reproducibility.}
+All spectral computations and numerical verifications were performed
+using explicit construction of the 600-cell graph and standard
+eigendecomposition.  Code and data are available in the accompanying
+repository.
+
+
+% ══════════════════════════════════════════════════════════
+% References
+% ══════════════════════════════════════════════════════════
+\begin{thebibliography}{10}
+
+\bibitem{paper1}
+L.~Smart,
+``Symmetry-Constrained Resonant Modes on $H_4$ Geometry:
+A Geometric Framework for Vibrational Field Dynamics,''
+\textit{VFD Working Paper Series}, WO-VFD-PAPER-001, 2025.
+
+\bibitem{humphreys1990}
+J.~E.~Humphreys,
+\textit{Reflection Groups and Coxeter Groups}.
+Cambridge University Press, 1990.
+
+\bibitem{coxeter1973}
+H.~S.~M.~Coxeter,
+\textit{Regular Polytopes}, 3rd~ed.
+Dover Publications, 1973.
+
+\bibitem{conway1999}
+J.~H.~Conway and N.~J.~A.~Sloane,
+\textit{Sphere Packings, Lattices and Groups}, 3rd~ed.
+Springer, 1999.
+
+\bibitem{vilenkin1993}
+N.~J.~Vilenkin and A.~U.~Klimyk,
+\textit{Representation of Lie Groups and Special Functions}, Vol.~2.
+Kluwer Academic, 1993.
+
+\bibitem{chung1997}
+F.~R.~K.~Chung,
+\textit{Spectral Graph Theory}.
+AMS, 1997.
+
+\bibitem{brouwer2012}
+A.~E.~Brouwer and W.~H.~Haemers,
+\textit{Spectra of Graphs}.
+Springer, 2012.
+
+\bibitem{serre1977}
+J.-P.~Serre,
+\textit{Linear Representations of Finite Groups}.
+Springer, 1977.
+
+\end{thebibliography}
+
+\vfill
+\noindent\rule{\textwidth}{0.4pt}\\[4pt]
+{\footnotesize
+\textit{Vibrational Field Dynamics Working Paper Series}
+\hfill Part~II \quad Draft v1.1 (submission-ready)}
+
+\end{document}
