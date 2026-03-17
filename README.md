@@ -12,7 +12,7 @@ This repository contains a series of working papers exploring the geometric and 
 
 A real scalar field is defined on the vertex graph of the 600-cell — the terminal regular polytope of the non-crystallographic Coxeter family H₄. The Laplacian spectrum contains only 9 distinct eigenvalues across 120 degrees of freedom. Numerical simulations demonstrate persistent localisation, coherent shell reflection, and recurrent breathing dynamics that are absent in degree-matched control graphs.
 
-- [Paper I (LaTeX source)](papers/paper-001-h4-dynamics/vfd_h4_resonance_model.tex)
+- [Paper I (PDF)](papers/paper-001-h4-dynamics/Symmetry_Constrained_Resonant_Modes_on_H4_Geometry.pdf)
 - [Simulation figures](papers/paper-001-h4-dynamics/figures/)
 
 ### Paper II — Algebraic Invariants of the H₄ Laplacian Spectrum
@@ -20,7 +20,7 @@ A real scalar field is defined on the vertex graph of the 600-cell — the termi
 
 The internal organisation of the nine-sector Laplacian spectrum is analysed. Seven structural invariants are identified: φ-cancellation, degree anchoring, conjugate pairing, square multiplicity folding, three-zone partition, spectral backbone decomposition, and departure structure. These invariants are consistent with the coherent dynamics reported in Paper I.
 
-- [Paper II (LaTeX source)](papers/paper-002-h4-invariants/paper2_h4_invariants.tex)
+- [Paper II (PDF)](papers/paper-002-h4-invariants/Algebraic_Invariants_of_the_H4_Laplacian_Spectrum.pdf)
 - [Spectral figures](papers/paper-002-h4-invariants/figures/)
 
 ## Relationship
