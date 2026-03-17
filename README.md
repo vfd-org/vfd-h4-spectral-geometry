@@ -1,3 +1,6 @@
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Status: Research](https://img.shields.io/badge/status-research-blue)
+
 # Vibrational Field Dynamics — Research Series
 
 This repository contains a series of working papers exploring the geometric and algebraic structure of symmetry-constrained field dynamics on H₄ geometry (the 600-cell).
@@ -55,7 +58,17 @@ Requirements: Python 3.8+, NumPy, SciPy, Matplotlib, PyTorch (optional, for acce
 
 ## Status
 
-These are working papers. No direct physical interpretation is claimed. The results establish a non-generic spectral structure that warrants further mathematical investigation.
+This repository contains research-stage work. The results are
+mathematically well-defined and computationally verified, but no
+physical interpretation is assumed. The spectral structure identified
+here is non-generic and warrants further mathematical investigation.
+
+## Reproducibility
+
+All results in Papers I and II are reproducible from the code in
+[`/simulations`](simulations/). Spectral computations use explicit
+construction of the 600-cell graph and standard eigendecomposition.
+No external datasets or proprietary software are required.
 
 ## Author
 

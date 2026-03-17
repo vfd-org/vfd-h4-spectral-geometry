@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "VFD H4 Spectral Geometry"
+message: "If you use this work, please cite the associated papers."
+authors:
+  - family-names: Smart
+    given-names: Lee
+    affiliation: Institute of Vibrational Field Dynamics
+    orcid: ""
+repository-code: "https://github.com/vfd-org/vfd-h4-spectral-geometry"
+license: MIT
+keywords:
+  - spectral graph theory
+  - H4 symmetry
+  - 600-cell
+  - Laplacian spectrum
+  - nonlinear dynamics
+  - Coxeter groups
+  - golden ratio
+  - algebraic graph theory
