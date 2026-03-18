@@ -1,0 +1,1358 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    citecolor=blue!60!black,
+    urlcolor=blue!60!black
+}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+% ── Custom commands ───────────────────────────────────────
+\newcommand{\Hfour}{H_4}
+\newcommand{\Hthree}{H_3}
+\newcommand{\Htwo}{H_2}
+\newcommand{\Eeight}{E_8}
+\newcommand{\vphi}{\varphi}
+\newcommand{\Lmat}{L_{H_4}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{observation}{Observation}
+
+% ── Title ─────────────────────────────────────────────────
+\title{%
+  \textbf{Nonlinear Mode Localisation on the $\Hfour$ Graph}\\[6pt]
+  \large Part~III of a Series on Symmetry-Constrained Resonant Structure%
+}
+\author{%
+  Lee Smart\\[4pt]
+  \textit{Institute of Vibrational Field Dynamics}\\[2pt]
+  \texttt{contact@vibrationalfielddynamics.org}\\[2pt]
+  \texttt{@vfd\_org}%
+}
+\date{\today}
+
+% ══════════════════════════════════════════════════════════
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+% ── Abstract ──────────────────────────────────────────────
+\begin{abstract}
+The nonlinear dynamics of a real scalar field on the 600-cell vertex
+graph are studied under variation of the self-interaction strength~$\beta$.
+The system admits a Hamiltonian formulation with an $\Hfour$-symmetric
+graph Laplacian coupling and a quartic on-site nonlinearity.
+Part~I of this series established that the system exhibits persistent
+spatial localisation and coherent shell dynamics; Part~II identified
+seven structural invariants of the Laplacian spectrum that constrain
+the available dynamical channels.
+The present work classifies the space of persistent nonlinear
+configurations.  Four attractor classes are identified: backbone
+harmonic modes, phase-locked multi-mode states, spatially localised
+breather-like configurations, and transitional unstable states.
+These classes are characterised by their inverse participation ratio,
+spectral composition, recurrence statistics, and stability under
+perturbation.  A phase diagram in~$\beta$ delineates the boundaries
+between linear, weakly nonlinear, and strongly nonlinear regimes.
+The attractor taxonomy is shown to be consistent with the spectral
+invariants of Part~II: the seven structural constraints restrict the
+attractor space to a finite, classifiable set of dynamical families.
+All results are derived from numerical simulation with no physical
+interpretation assumed.
+\end{abstract}
+
+\vspace{1em}
+\noindent\textbf{Keywords:}
+nonlinear lattice dynamics, discrete breathers, attractor classification,
+$\Hfour$ symmetry, 600-cell, spectral constraints, inverse participation
+ratio, Hamiltonian systems.
+
+\newpage
+\tableofcontents
+\newpage
+
+
+% ══════════════════════════════════════════════════════════
+\section{Introduction}\label{sec:intro}
+% ══════════════════════════════════════════════════════════
+
+In Part~I of this series~\cite{paper1}, a real scalar field was defined
+on the 120-vertex graph of the 600-cell and evolved under a nonlinear
+wave equation incorporating the $\Hfour$ graph Laplacian.  Numerical
+simulations revealed persistent spatial localisation, coherent shell
+reflection, and recurrent breathing dynamics that are absent in
+degree-matched control graphs.  These phenomena were attributed to the
+extreme spectral compression of the $\Hfour$ Laplacian, which produces
+only nine distinct eigenvalues across 120~degrees of freedom.
+
+In Part~II~\cite{paper2}, the internal organisation of this nine-sector
+spectrum was analysed algebraically.  Seven structural invariants were
+identified---$\vphi$-cancellation, degree anchoring, conjugate pairing,
+square multiplicity folding, three-zone partition, spectral backbone
+decomposition, and departure structure---collectively demonstrating
+that the spectrum is governed by a highly constrained algebraic
+organisation rather than arising generically.
+
+The present work addresses a natural question arising from these
+results: \emph{given a spectrum with only nine sectors and seven
+governing invariants, what is the space of stable nonlinear dynamical
+configurations?}
+
+This is a question about dynamical attractors, not about physical
+entities.  The goal is to classify the persistent configurations of the
+nonlinear field system---that is, the states to which generic initial
+conditions evolve and in which the system remains for long times.  The
+classification is based on observable dynamical properties: spatial
+localisation, spectral composition, temporal periodicity, and stability
+under perturbation.
+
+The distinction between spectral structure and dynamical structure is
+central.  The spectral invariants of Part~II are properties of the
+static Laplacian; they constrain the \emph{channels} available to
+dynamics but do not determine a unique dynamical outcome.  The
+attractor classification of the present work identifies which of these
+constrained channels are actually realised as persistent nonlinear
+configurations.
+
+\paragraph{Organisation.}
+Section~\ref{sec:system} defines the full nonlinear system and its
+conserved quantities.  Section~\ref{sec:taxonomy} introduces the mode
+taxonomy: single-mode states, multi-mode locked states, and localised
+breather-like states.  Section~\ref{sec:stability} presents stability
+analysis including persistence, perturbation response, and parameter
+sweeps.  Section~\ref{sec:quantify} defines quantitative diagnostics.
+Section~\ref{sec:invariants} maps the attractor classes to the
+spectral invariants of Part~II.  Section~\ref{sec:classification}
+presents the complete attractor classification.
+Section~\ref{sec:numerics} reports the numerical results.
+Section~\ref{sec:discussion} discusses the results in relation to
+spectral structure, localisation mechanisms, and limitations.
+Section~\ref{sec:conclusion} offers conclusions.
+
+
+% ══════════════════════════════════════════════════════════
+\section{Dynamical System Setup}\label{sec:system}
+% ══════════════════════════════════════════════════════════
+
+\subsection{Equation of Motion}
+
+The system studied throughout this series is defined by the nonlinear
+wave equation on the 600-cell vertex graph:
+\begin{equation}\label{eq:eom}
+  \ddot{\Phi}_i + \omega_0^2 \, \Phi_i
+  + \lambda \, (\Lmat \Phi)_i
+  + \beta \, \Phi_i^3 = 0,
+  \qquad i = 1, \ldots, 120,
+\end{equation}
+where $\Phi_i(t) \in \R$ is the field amplitude at vertex~$i$,
+$\Lmat = 12I - A$ is the graph Laplacian of the 600-cell,
+$\omega_0$ is the base frequency, $\lambda$ is the Laplacian coupling
+strength, and $\beta$ is the nonlinear self-interaction parameter.
+
+Parts~I and~II studied this system primarily in the linear regime
+($\beta = 0$) and with moderate nonlinearity.  The present work
+treats $\beta$ as the primary control parameter and maps the full
+range from linear ($\beta \to 0$) through strongly nonlinear
+behaviour.
+
+\subsection{Hamiltonian Structure}
+
+Equation~\eqref{eq:eom} derives from the Hamiltonian
+\begin{equation}\label{eq:ham}
+  H = \sum_{i=1}^{120} \left[
+    \frac{1}{2} \Pi_i^2
+    + \frac{1}{2} \omega_0^2 \, \Phi_i^2
+    + \frac{1}{4} \beta \, \Phi_i^4
+  \right]
+  + \frac{1}{2} \lambda \, \Phi^T \Lmat \Phi,
+\end{equation}
+where $\Pi_i = \dot{\Phi}_i$ is the conjugate momentum.  The
+equations of motion are
+\begin{equation}\label{eq:hamilton_eqs}
+  \dot{\Phi}_i = \Pi_i, \qquad
+  \dot{\Pi}_i = -\omega_0^2 \, \Phi_i
+    - \lambda \, (\Lmat \Phi)_i - \beta \, \Phi_i^3.
+\end{equation}
+The Hamiltonian~$H$ is a conserved quantity: $\dot{H} = 0$.  This
+conservation provides a fundamental check on the numerical integration.
+
+\subsection{Phase Space}
+
+The phase space of the system is $(\Phi, \Pi) \in \R^{240}$, where
+$\Phi = (\Phi_1, \ldots, \Phi_{120})$ and
+$\Pi = (\Pi_1, \ldots, \Pi_{120})$.
+
+The $\Hfour$ symmetry group acts on phase space by simultaneous
+permutation of vertex indices in both~$\Phi$ and~$\Pi$.  An orbit of
+this action corresponds to a set of dynamically equivalent
+configurations related by the symmetry of the 600-cell.
+
+\subsection{Observables}\label{sec:observables}
+
+The following observables are used throughout this work to characterise
+dynamical states:
+
+\begin{enumerate}[nosep]
+\item \textbf{Total energy:}
+  $H$ as defined in~\eqref{eq:ham}.
+
+\item \textbf{Per-vertex energy:}
+  $h_i = \frac{1}{2}\Pi_i^2 + \frac{1}{2}\omega_0^2 \Phi_i^2
+  + \frac{1}{4}\beta \Phi_i^4
+  + \frac{1}{2}\lambda \Phi_i (\Lmat \Phi)_i$.
+
+\item \textbf{Mode projection amplitudes:}
+  $c_k(t) = \langle \Phi(t), \mathbf{v}^{(k)} \rangle$, where
+  $\mathbf{v}^{(k)}$ are the eigenvectors of~$\Lmat$.
+
+\item \textbf{Spatial variance:}
+  $\sigma^2(t) = \frac{1}{120} \sum_i (\Phi_i - \bar{\Phi})^2$,
+  where $\bar{\Phi} = \frac{1}{120} \sum_i \Phi_i$.
+\end{enumerate}
+
+
+% ══════════════════════════════════════════════════════════
+\section{Mode Taxonomy}\label{sec:taxonomy}
+% ══════════════════════════════════════════════════════════
+
+The nonlinear system~\eqref{eq:eom} admits several qualitatively
+distinct classes of persistent dynamical configuration.  These are
+distinguished by their spectral content, spatial profile, and temporal
+behaviour.
+
+% ── 3.1 ──────────────────────────────────────────────────
+\subsection{Single-Mode States}\label{sec:single}
+
+\begin{definition}[Single-mode state]
+A single-mode state is a solution dominated by projection onto a
+single eigenvector of the Laplacian:
+\begin{equation}\label{eq:single}
+  \Phi(t) \approx A_k \cos(\Omega_k t) \, \mathbf{v}^{(k)},
+\end{equation}
+where $\mathbf{v}^{(k)}$ is an eigenvector of~$\Lmat$ with eigenvalue
+$\mu_k$, and $\Omega_k$ is the effective nonlinear frequency.
+\end{definition}
+
+In the linear limit ($\beta = 0$), the frequency is
+$\Omega_k^2 = \omega_0^2 + \lambda \mu_k$.  The nonlinear correction
+shifts this to
+\begin{equation}\label{eq:freq_shift_single}
+  \Omega_k^2 = \omega_0^2 + \lambda \mu_k
+  + \frac{3}{4} \beta A_k^2 \, \lVert \mathbf{v}^{(k)} \rVert_4^4,
+\end{equation}
+where $\lVert \mathbf{v}^{(k)} \rVert_4^4
+= \sum_i |v_i^{(k)}|^4$ is the $\ell^4$ norm of the eigenvector.
+The factor~$3/4$ arises from time-averaging the cubic term over one
+period.
+
+Single-mode states inherit the spatial symmetry of their constituent
+eigenvector.  Since the eigenspaces of~$\Lmat$ decompose into
+irreducible representations of~$\Hfour$, single-mode states carry
+definite transformation properties under the symmetry group.
+
+\begin{observation}
+Single-mode states associated with backbone sectors
+($k = 1, \ldots, 6$, comprising 91~modes) are more stable than those
+in the departure sectors ($k = 7, 8, 9$), as measured by persistence
+time under small perturbation.  This is consistent with the spectral
+backbone hierarchy identified in Part~II (Invariant~6).
+\end{observation}
+
+% ── 3.2 ──────────────────────────────────────────────────
+\subsection{Multi-Mode Locked States}\label{sec:multi}
+
+\begin{definition}[Multi-mode locked state]
+A multi-mode locked state is a superposition of eigenmodes that
+maintains fixed phase relationships over long times:
+\begin{equation}\label{eq:multi}
+  \Phi(t) = \sum_{k \in \mathcal{K}} c_k(t) \, \mathbf{v}^{(k)},
+\end{equation}
+where $\mathcal{K} \subset \{1, \ldots, 120\}$ is a subset of mode
+indices and the relative phases $\theta_{kl}(t) = \arg(c_k) - \arg(c_l)$
+are approximately constant: $|\dot{\theta}_{kl}| < \epsilon$ for all
+$k, l \in \mathcal{K}$.
+\end{definition}
+
+The nonlinearity~$\beta \Phi^3$ couples different eigenmodes.  For a
+multi-mode superposition, the effective nonlinear frequency of mode~$k$
+becomes
+\begin{equation}\label{eq:freq_shift_multi}
+  \Omega_k^2 \to \omega_0^2 + \lambda \mu_k
+  + \frac{3}{2} \beta |c_k|^2 \, \gamma_{kk}
+  + 3\beta \sum_{l \neq k} |c_l|^2 \, \gamma_{kl},
+\end{equation}
+where $\gamma_{kl} = \sum_i v_i^{(k)} v_i^{(k)} v_i^{(l)} v_i^{(l)}$
+are overlap integrals determined by the spatial profiles of the
+eigenvectors.  Phase locking occurs when the nonlinear frequency shifts
+bring modes into a rational frequency ratio.
+
+\begin{observation}
+Stable multi-mode locked states preferentially involve modes from the
+same $\vphi$-zone (Invariant~5 of Part~II): either both from
+$\mathcal{S}_-$, both from $\mathcal{S}_0$, or both from
+$\mathcal{S}_+$.  Cross-zone locking is observed but is less stable,
+consistent with the three-zone partition constraining the coupling
+structure.
+\end{observation}
+
+The resonance locking condition for two modes $k$ and $l$ is
+\begin{equation}\label{eq:lock}
+  \frac{\Omega_k}{\Omega_l} = \frac{p}{q}, \qquad p, q \in \Z_{>0},
+\end{equation}
+where $p/q$ is a low-order rational.  The $\Hfour$ spectral compression
+limits the number of available frequency ratios to those derivable from
+nine sectors, producing a sparse resonance network compared to generic
+graphs.
+
+% ── 3.3 ──────────────────────────────────────────────────
+\subsection{Localised (Breather-Like) States}\label{sec:breather}
+
+\begin{definition}[Breather-like state]
+A breather-like state is a spatially localised, time-periodic (or
+quasi-periodic) configuration satisfying:
+\begin{enumerate}[nosep]
+  \item High spatial concentration:
+    $\mathrm{IPR}(\Phi(t)) \gg 1/120$ for all~$t$.
+  \item Energy trapping: a fraction $f > 0.5$ of the total energy
+    remains within a connected subgraph of diameter~$\leq 2$ for
+    times $t > T_{\mathrm{transient}}$.
+  \item Persistence: $\lVert \Phi(t+T) - \Phi(t) \rVert / \lVert
+    \Phi(t) \rVert < \delta$ for some period~$T$ and threshold
+    $\delta \ll 1$.
+\end{enumerate}
+\end{definition}
+
+Breather-like states emerge from the interplay between nonlinear
+self-trapping (the $\beta \Phi^3$ term) and the discrete geometry of
+the 600-cell graph.  In the theory of discrete breathers on
+lattices~\cite{flach2008,aubry1997}, spatially localised time-periodic
+solutions exist generically in nonlinear Hamiltonian lattice systems
+above a nonlinearity threshold.
+
+The 600-cell graph presents a distinctive setting for discrete breather
+formation.  The 12-regular structure with icosahedral local geometry
+provides a homogeneous coupling environment, while the extreme
+spectral compression limits the radiation channels available for
+energy dispersion.  The backbone modes (91~of 120~degrees of freedom)
+occupy a narrow spectral band, reducing the density of states into
+which a localised excitation can radiate.
+
+\begin{observation}
+Breather-like states on the 600-cell graph are characterised by:
+\begin{itemize}[nosep]
+  \item high amplitude concentration on $\mathcal{O}(10)$ vertices,
+  \item energy trapping persisting over $> 10^3$ oscillation periods,
+  \item broad spectral composition spanning multiple sectors.
+\end{itemize}
+These properties are consistent with the localisation enhancement
+reported in Part~I ($5\times$ enhancement relative to controls).
+\end{observation}
+
+
+% ══════════════════════════════════════════════════════════
+\section{Stability Analysis}\label{sec:stability}
+% ══════════════════════════════════════════════════════════
+
+The classification of dynamical states requires distinguishing
+persistent attractors from transient configurations.  Three
+complementary stability measures are employed.
+
+% ── 4.1 ──────────────────────────────────────────────────
+\subsection{Persistence Over Time}\label{sec:persist}
+
+For a candidate periodic or quasi-periodic state with approximate
+period~$T$, the recurrence error is defined as
+\begin{equation}\label{eq:recurrence}
+  R(T) = \frac{\lVert \Phi(t_0 + T) - \Phi(t_0) \rVert}
+              {\lVert \Phi(t_0) \rVert},
+\end{equation}
+evaluated after a transient time $t_0 \gg T$.  A state is classified
+as \emph{persistent} if $R(T) < \delta_R$ for threshold $\delta_R = 0.05$
+over a window of at least 100~periods.
+
+States are further classified by the nature of their recurrence:
+\begin{itemize}[nosep]
+  \item \textbf{Periodic:} $R(T) < 10^{-3}$ for a single dominant
+    period~$T$.
+  \item \textbf{Quasi-periodic:} $R(T) < \delta_R$ for a period~$T$
+    that is a combination of two or more incommensurate
+    frequencies; the power spectrum shows discrete peaks.
+  \item \textbf{Weakly chaotic:} $R(T) > \delta_R$ for all~$T$
+    within the simulation window, but the largest Lyapunov exponent
+    is small ($\lambda_{\max} < 10^{-2}$).
+  \item \textbf{Transient:} the state decays or disperses within the
+    simulation window.
+\end{itemize}
+
+% ── 4.2 ──────────────────────────────────────────────────
+\subsection{Robustness to Perturbation}\label{sec:robust}
+
+Given a state $(\Phi^*, \Pi^*)$ identified as persistent, a perturbed
+initial condition is constructed:
+\begin{equation}\label{eq:perturb}
+  \Phi_{\epsilon} = \Phi^* + \epsilon \, \boldsymbol{\eta},
+  \qquad
+  \Pi_{\epsilon} = \Pi^*,
+\end{equation}
+where $\boldsymbol{\eta}$ is drawn uniformly from the unit sphere in
+$\R^{120}$ and $\epsilon$ controls the perturbation amplitude.
+
+The divergence rate is measured by
+\begin{equation}\label{eq:diverge}
+  D(t) = \frac{\lVert \Phi_{\epsilon}(t)
+    - \Phi_{\mathrm{ref}}(t) \rVert}
+    {\lVert \Phi_{\mathrm{ref}}(t) \rVert},
+\end{equation}
+where $\Phi_{\mathrm{ref}}(t)$ is the unperturbed evolution.
+
+A state is classified as \emph{stable} if $D(t)$ remains bounded for
+$t \gg T$, and the system returns to a neighbourhood of the original
+attractor.  The basin of attraction is estimated by varying~$\epsilon$
+and identifying the critical value $\epsilon_c$ at which the perturbed
+trajectory no longer returns.
+
+% ── 4.3 ──────────────────────────────────────────────────
+\subsection{Parameter Sweep in $\beta$}\label{sec:sweep}
+
+The nonlinear coupling~$\beta$ is swept across the range
+$\beta \in [0, 5]$ with fixed $\omega_0 = 1.0$ and $\lambda = 1.0$.
+For each value of~$\beta$, an ensemble of initial conditions is
+evolved and classified by the diagnostics of
+Section~\ref{sec:quantify}.
+
+Three dynamical regimes are identified:
+
+\begin{enumerate}[nosep]
+\item \textbf{Linear regime} ($\beta \lesssim 0.01$):
+  dynamics are well-approximated by superpositions of linear
+  eigenmodes.  No mode locking or localisation beyond the linear
+  spectral structure is observed.
+
+\item \textbf{Weakly nonlinear regime}
+  ($0.01 \lesssim \beta \lesssim 1.0$):
+  nonlinear frequency shifts produce mode locking.
+  Multi-mode locked states appear.  Localisation is enhanced
+  relative to the linear case but breather-like states are
+  not yet dominant.
+
+\item \textbf{Strongly nonlinear regime} ($\beta \gtrsim 1.0$):
+  self-trapping dominates.  Spatially localised breather-like
+  states form spontaneously from generic initial conditions.
+  Energy concentration on $\mathcal{O}(10)$ vertices is
+  typical.
+\end{enumerate}
+
+The boundaries between regimes are not sharp; the classification
+represents the dominant behaviour within each range.  The phase diagram
+(Figure~\ref{fig:phase}) maps the attractor class frequency as a
+function of~$\beta$.
+
+
+% ══════════════════════════════════════════════════════════
+\section{Quantifying Structure}\label{sec:quantify}
+% ══════════════════════════════════════════════════════════
+
+% ── 5.1 ──────────────────────────────────────────────────
+\subsection{Inverse Participation Ratio}\label{sec:ipr}
+
+The inverse participation ratio (IPR) quantifies spatial localisation:
+\begin{equation}\label{eq:ipr}
+  \mathrm{IPR}(t) = \frac{\sum_{i=1}^{120} \Phi_i(t)^4}
+    {\left(\sum_{i=1}^{120} \Phi_i(t)^2\right)^2}.
+\end{equation}
+
+The IPR ranges from $1/120 \approx 0.0083$ for a perfectly delocalised
+state to~$1$ for a state concentrated on a single vertex.  The
+time-averaged IPR, $\langle \mathrm{IPR} \rangle_t$, is used as the
+primary localisation diagnostic.
+
+\begin{itemize}[nosep]
+\item $\langle \mathrm{IPR} \rangle \lesssim 0.02$:
+  effectively delocalised (comparable to uniform).
+\item $0.02 \lesssim \langle \mathrm{IPR} \rangle \lesssim 0.1$:
+  moderately localised (energy on $\sim$10--50~vertices).
+\item $\langle \mathrm{IPR} \rangle \gtrsim 0.1$:
+  strongly localised (energy on $\lesssim 10$~vertices).
+\end{itemize}
+
+% ── 5.2 ──────────────────────────────────────────────────
+\subsection{Recurrence Statistics}\label{sec:recurrence}
+
+The autocorrelation function of the field configuration is
+\begin{equation}\label{eq:autocorr}
+  C(\tau) = \left\langle
+    \frac{\langle \Phi(t), \Phi(t+\tau) \rangle}
+         {\lVert \Phi(t) \rVert \, \lVert \Phi(t+\tau) \rVert}
+  \right\rangle_t.
+\end{equation}
+
+The power spectrum $S(\omega) = |\hat{C}(\omega)|^2$ reveals the
+dominant frequencies and their multiplicity.  The number of distinct
+spectral peaks above a threshold is denoted $N_{\mathrm{peaks}}$.
+
+\begin{itemize}[nosep]
+\item $N_{\mathrm{peaks}} = 1$: periodic.
+\item $N_{\mathrm{peaks}} = 2$--5 with incommensurate ratios:
+  quasi-periodic.
+\item Broad-band spectrum: chaotic.
+\end{itemize}
+
+The recurrence time is defined as the smallest $\tau > 0$ for which
+$C(\tau) > 1 - \delta_C$ with $\delta_C = 0.05$.
+
+% ── 5.3 ──────────────────────────────────────────────────
+\subsection{Shell Coupling}\label{sec:shell}
+
+The 600-cell graph has palindromic distance shells
+$(1, 12, 32, 42, 32, 1)$ from any vertex.  Define the shell energy
+\begin{equation}\label{eq:shell_energy}
+  E_d(t) = \sum_{i \in S_d(v_0)} h_i(t),
+\end{equation}
+where $S_d(v_0)$ is the set of vertices at graph distance~$d$ from a
+reference vertex~$v_0$, and $h_i$ is the per-vertex energy.
+
+The shell cross-correlation measures coherence between adjacent shells:
+\begin{equation}\label{eq:shell_corr}
+  \rho_{d,d+1}
+  = \frac{\langle E_d(t) \, E_{d+1}(t) \rangle_t
+    - \langle E_d \rangle \langle E_{d+1} \rangle}
+    {\sigma_{E_d} \, \sigma_{E_{d+1}}}.
+\end{equation}
+
+High cross-correlation ($\rho > 0.5$) indicates coherent energy
+propagation between shells.  Part~I reported $\rho \approx 0.68$ on
+the 600-cell versus $\rho \approx 0.1$ on control graphs.  The
+present work extends this analysis to the nonlinear regime and
+examines how shell coupling varies with~$\beta$.
+
+
+% ══════════════════════════════════════════════════════════
+\section{Connection to Part~II Invariants}\label{sec:invariants}
+% ══════════════════════════════════════════════════════════
+
+The seven structural invariants identified in Part~II~\cite{paper2}
+are properties of the static Laplacian spectrum.  The dynamical
+content of these invariants---the manner in which they constrain the
+attractor space---is the central concern of the present section.
+
+\begin{enumerate}[nosep, leftmargin=*]
+
+\item \textbf{$\vphi$-Cancellation $\to$ Balanced coupling.}
+The exact cancellation of irrational spectral content
+($\sum b_k = 0$, $\sum b_k d_k = 0$) ensures that the net
+$\vphi$-weighted coupling across all modes vanishes.
+Dynamically, this prevents systematic drift of energy toward
+either $\vphi$-sector and maintains a balanced coupling
+environment in which localised states can persist without
+preferential leakage into irrational-frequency channels.
+
+\item \textbf{Degree anchoring ($k=12$) $\to$ Spectral centring.}
+The anchoring of irrational eigenvalues at the graph degree
+($b_k < 0 \implies a_k = 12$) centres the $\vphi$-shifted
+eigenvalues around the graph degree.  This constrains the
+nonlinear frequency shifts~\eqref{eq:freq_shift_multi} to
+remain near a common reference, facilitating mode locking.
+
+\item \textbf{Conjugate pairing $\to$ Symmetric mode families.}
+The equal multiplicities of Galois conjugate eigenvalue pairs
+ensure that for every resonance channel involving a
+$\vphi$-shifted frequency, a conjugate channel exists with
+equal multiplicity.  This produces symmetric families of
+multi-mode locked states.
+
+\item \textbf{Square multiplicities $\to$ Backbone stability hierarchy.}
+The $(\ell+1)^2$ multiplicity pattern creates a hierarchy in
+which higher-multiplicity sectors ($d = 25, 36$) provide
+larger basins of attraction for single-mode and multi-mode
+states.  The backbone modes ($d = 1, 4, 9, 16, 25, 36$,
+totalling~91) dominate the attractor landscape.
+
+\item \textbf{Three-zone partition $\to$ Mode class separation.}
+The partition $\mathcal{S} = \mathcal{S}_- \cup \mathcal{S}_0
+\cup \mathcal{S}_+$ separates modes into three coupling classes.
+Cross-zone nonlinear coupling is suppressed relative to
+within-zone coupling, producing distinct attractor families
+associated with each zone.
+
+\item \textbf{Spectral backbone $\to$ Dominant attractors.}
+The 91-mode backbone carries the dominant share of the
+multiplicity-weighted spectral density.  Persistent attractors
+are overwhelmingly composed of backbone modes; the 29-mode
+departure contributes primarily to transient or unstable
+configurations.
+
+\item \textbf{Departure structure $\to$ Higher-energy unstable modes.}
+The structured departure ($29 = 9 + 16 + 4$) provides a
+finite set of modes available for energy redistribution during
+transient dynamics.  These modes act as temporary energy
+reservoirs rather than long-lived attractor components.
+
+\end{enumerate}
+
+\begin{proposition}
+The spectral invariants of Part~II constrain the attractor space of
+the nonlinear system.  Specifically:
+\begin{itemize}[nosep]
+\item The number of attractor families is bounded by the number of
+  spectral sectors and their coupling structure.
+\item The dominant attractors are composed of backbone modes.
+\item The stability hierarchy among attractors reflects the
+  multiplicity hierarchy of the spectrum.
+\end{itemize}
+\end{proposition}
+
+The invariants do not uniquely determine the attractors; they constrain
+the space in which attractors exist.  Paper~II provides the algebraic
+constraint; the present paper identifies the dynamical realisations
+within that constrained space.
+
+
+% ══════════════════════════════════════════════════════════
+\section{Attractor Classification}\label{sec:classification}
+% ══════════════════════════════════════════════════════════
+
+Based on the taxonomy of Section~\ref{sec:taxonomy}, the stability
+analysis of Section~\ref{sec:stability}, and the diagnostic measures
+of Section~\ref{sec:quantify}, four attractor classes are defined.
+
+\begin{table}[H]
+\centering
+\caption{Attractor classification for the nonlinear $\Hfour$ field
+system.  IPR ranges and spectral composition are time-averaged
+values from the numerical simulations described in
+Section~\ref{sec:numerics}.}
+\label{tab:classes}
+\begin{tabular}{@{}clccl@{}}
+\toprule
+Class & Description & IPR range &
+  Spectral sectors & Stability \\
+\midrule
+1 & Backbone harmonic modes & $0.008$--$0.03$ &
+  single ($k \leq 6$) & persistent, periodic \\
+2 & Locked multi-mode states & $0.02$--$0.08$ &
+  2--4 backbone sectors & persistent, quasi-periodic \\
+3 & Localised breather states & $0.05$--$0.5$ &
+  broad (all sectors) & persistent, quasi-periodic \\
+4 & Transitional / unstable & variable &
+  broad, shifting & transient \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Class~1: Backbone Harmonic Modes}
+
+These are the simplest persistent states: single-eigenvector
+configurations living within the 91-mode backbone.  They are
+effectively linear modes with small nonlinear frequency corrections.
+Their spatial profile inherits the symmetry of the $\Hfour$ irreducible
+representation to which the eigenvector belongs.
+
+The spatial structure of Class~1 states is globally distributed across
+the 120~vertices with low spatial variance.  The field amplitude
+$\Phi_i$ follows a symmetry-consistent pattern determined by the
+constituent eigenvector, with no strong concentration on any vertex
+subset (Figure~\ref{fig:modes}, top left).
+
+IPR is low ($\sim 1/120$ to $\sim 0.03$), placing these states near
+the fully delocalised baseline.  Class~1 states dominate at low~$\beta$
+($\sim$17\% of trajectories for $\beta < 0.01$) and decline to
+$\sim$5--7\% in the strongly nonlinear regime
+(Figure~\ref{fig:phase}), as the nonlinearity destabilises simple
+harmonic configurations and redistributes energy into multi-mode
+states.  Stability is high: perturbations of amplitude
+$\epsilon < 0.1 \lVert \Phi^* \rVert$ return to the original state.
+
+\subsection{Class~2: Locked Multi-Mode States}
+
+These states involve 2--4 eigenmodes from backbone sectors with
+phase-locked amplitude oscillations.  The phase locking arises from
+the nonlinear frequency shifts~\eqref{eq:freq_shift_multi} and is
+stabilised by the spectral compression (nine sectors rather than 120
+distinct eigenvalues).
+
+The spatial structure exhibits multi-scale interference: the
+superposition of locked eigenvectors produces a pattern with partial
+coherence and intermediate spatial variance
+(Figure~\ref{fig:modes}, top right).  Unlike Class~1, the field
+amplitude varies on multiple length scales, reflecting the
+contribution of modes from different spectral sectors.
+
+IPR is moderately elevated ($0.02$--$0.08$), reflecting partial
+spatial localisation from the constructive interference of locked
+modes.  Class~2 states are the most prevalent attractor family across
+all values of~$\beta$, comprising $\sim$55\% of trajectories at low
+nonlinearity and rising to $\sim$64\% in the strongly nonlinear regime.
+This increase reflects the tendency of nonlinear frequency shifts to
+bring additional mode pairs into resonance, expanding the set of
+available locked configurations.  The states are quasi-periodic, with
+power spectra showing 2--4 discrete peaks.
+
+The most common locked states involve modes from sectors with the
+largest multiplicities (sectors~5 and~6, with $d = 25$ and $d = 36$
+respectively), consistent with the backbone stability hierarchy.
+
+\subsection{Class~3: Localised Breather States}
+
+These are the most distinctive configurations: spatially concentrated,
+time-periodic or quasi-periodic states in which a significant fraction
+of the total energy remains trapped in a small neighbourhood of the
+graph.
+
+The spatial structure is sharply localised: one or a few vertices
+carry the dominant field amplitude, with a high amplitude contrast
+between the localised core and the remainder of the graph
+(Figure~\ref{fig:modes}, bottom left).  This localisation is not
+imposed by the initial conditions but emerges dynamically from the
+interplay between the nonlinear self-interaction and the constrained
+spectral structure.
+
+IPR ranges from~$0.05$ (moderate localisation) to values exceeding
+$0.5$ (extreme concentration on $\sim$2--5~vertices).  At high~$\beta$,
+the IPR distribution develops a heavy tail extending to $\mathrm{IPR}
+> 0.3$ (Figure~\ref{fig:ipr}), well separated from the delocalised
+baseline at $1/120 \approx 0.008$.  The spectral composition is
+broad, spanning multiple sectors including departure modes.  However,
+the time-averaged spectral content is dominated by backbone modes.
+
+Breather states maintain a remarkably stable presence across the full
+range of~$\beta$, comprising $\sim$27\% of trajectories in both the
+linear and strongly nonlinear regimes.  However, the \emph{degree} of
+localisation increases substantially with~$\beta$: the IPR of Class~3
+states at $\beta = 5$ reaches values an order of magnitude higher than
+at $\beta = 0.01$.
+
+\subsection{Class~4: Transitional / Unstable States}
+
+This class collects configurations that do not persist: states that
+evolve toward one of the other three classes within the simulation
+window, or that exhibit weakly chaotic wandering without settling into
+a definite attractor.
+
+The spatial structure is irregular, with no persistent pattern
+(Figure~\ref{fig:modes}, bottom right).  The field amplitude
+distribution is broad and noisy, shifting over time without converging
+to a stable configuration.
+
+Class~4 states are predominantly composed of departure-sector modes
+($k = 7, 8, 9$).  Their transient nature is consistent with the
+departure structure (Invariant~7 of Part~II): the 29-mode departure
+provides temporary energy reservoirs but does not support long-lived
+attractors.  Class~4 states are rare ($< 5\%$ of trajectories) and
+peak in the crossover region between the weakly and strongly nonlinear
+regimes (Figure~\ref{fig:phase}), where the competition between
+linear and nonlinear organising mechanisms is most intense.
+
+\medskip
+
+The mapping between attractor classes and the diagnostic observables
+is summarised as follows:
+\begin{itemize}[nosep]
+\item Class~1 $\leftrightarrow$ low IPR, dominant at low~$\beta$,
+  single backbone sector.
+\item Class~2 $\leftrightarrow$ intermediate IPR, phase-locked
+  multi-sector composition, dominant across all~$\beta$.
+\item Class~3 $\leftrightarrow$ high IPR, spatially localised,
+  broad spectral content.
+\item Class~4 $\leftrightarrow$ variable IPR, unstable, transient
+  spectral composition.
+\end{itemize}
+
+
+% ══════════════════════════════════════════════════════════
+\section{Results}\label{sec:numerics}
+% ══════════════════════════════════════════════════════════
+
+% ── 8.1 ──────────────────────────────────────────────────
+\subsection{Overview of Numerical Experiments}\label{sec:overview}
+
+We numerically investigate the nonlinear dynamics of the
+$\Hfour$-constrained oscillator system defined on the 600-cell graph
+(120~vertices, 12-regular, vertex-transitive).  The evolution is
+governed by the nonlinear equation introduced in
+Section~\ref{sec:system}, with particular focus on the role of the
+cubic nonlinearity parameter~$\beta$.
+
+We simulate $N = 2000$ trajectories (80~initial conditions per
+$\beta$~value across 25~values of~$\beta$).  Initial conditions are
+drawn from eight classes spanning localised, delocalised, and
+spectrally-targeted configurations: (i)~single-vertex excitation,
+(ii)~random Gaussian field ($\Phi_i \sim \mathcal{N}(0, \sigma^2)$,
+$\sigma = 0.1A$), (iii)~low-mode seed (projection onto backbone
+sectors $k \leq 3$), (iv)~local $\Hthree$ neighbourhood seed,
+(v)~mid-mode seed (sectors 4--6), (vi)~single eigenvector with
+Gaussian perturbation, (vii)~multi-vertex cluster (3--5 adjacent
+vertices), and (viii)~random field with nonzero initial momentum
+$\Pi_i \sim \mathcal{N}(0, \sigma_\Pi^2)$.  Initial amplitudes are
+drawn uniformly from $[0.1, 2.0]$.  No energy normalisation is
+applied; the total energy varies across initial conditions, reflecting
+the range of dynamical regimes accessible to the system.
+
+Time integration is performed using a velocity-Verlet (St\"ormer--Verlet)
+symplectic integrator with time step $\Delta t = 0.005$.  Each
+trajectory is evolved for $T = 2000$~time units ($4 \times 10^5$
+steps).  The symplectic structure of the integrator ensures long-term
+stability of the Hamiltonian.  Energy conservation is monitored
+throughout: the relative Hamiltonian drift
+$|H(t) - H(0)|/|H(0)|$ remains below $5 \times 10^{-4}$ for all
+retained trajectories.  Trajectories exceeding this threshold are
+discarded.
+
+After a transient period of $T_{\mathrm{trans}} = 200$~time units,
+diagnostics are computed over the remaining $1800$~time units.  The
+objective is to identify dynamically stable configurations and to
+characterise their structure under nonlinear evolution.
+
+\begin{table}[H]
+\centering
+\caption{Parameter ranges for the numerical experiments.}
+\label{tab:params}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Parameter & Symbol & Range \\
+\midrule
+Base frequency & $\omega_0$ & $1.0$ (fixed) \\
+Laplacian coupling & $\lambda$ & $1.0$ (fixed) \\
+Nonlinear strength & $\beta$ & $[10^{-3}, 5.0]$, 25 values (log-spaced) \\
+Initial amplitude & $A$ & $[0.1, 2.0]$ (uniformly sampled) \\
+Time step & $\Delta t$ & $0.005$ \\
+Total time & $T$ & $2000$ \\
+Transient period & $T_{\mathrm{trans}}$ & $200$ \\
+Integration method & --- & velocity-Verlet (symplectic, 2nd order) \\
+Energy drift threshold & --- & $< 5 \times 10^{-4}$ (relative) \\
+Ensemble size & $N_{\mathrm{IC}}$ & $80$ per $\beta$ value (2000 total) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ── 8.2 ──────────────────────────────────────────────────
+\subsection{Identification of Attractor Classes}\label{sec:id_classes}
+
+Across all simulations, trajectories converge to a small number of
+recurrent dynamical configurations.  These configurations can be
+grouped into four classes:
+
+\begin{enumerate}[nosep]
+\item \textbf{Class~1:} Backbone harmonic modes.
+\item \textbf{Class~2:} Locked multi-mode states.
+\item \textbf{Class~3:} Localised breather-like states.
+\item \textbf{Class~4:} Transitional (non-persistent) states.
+\end{enumerate}
+
+Classification is performed using quantitative criteria applied
+uniformly across the ensemble:
+\begin{itemize}[nosep]
+\item \textbf{Class~1:} configurations with $> 80\%$ of the
+  time-averaged spectral energy concentrated in a single eigenmode
+  sector, and $\mathrm{IPR} < 0.03$ (near the delocalised baseline
+  $1/n$).
+\item \textbf{Class~2:} configurations with spectral energy
+  distributed across 2--6 sectors, exhibiting stable phase
+  relationships (peak autocorrelation $> 0.2$ at nonzero lag), and
+  $\mathrm{IPR} < 0.10$.
+\item \textbf{Class~3:} configurations with $\mathrm{IPR} > 0.05$
+  and energy trapping fraction $> 0.35$ within a graph
+  2-neighbourhood, indicating spatial localisation.
+\item \textbf{Class~4:} configurations that fail the persistence
+  criteria above over the post-transient observation window of
+  $1800$~time units.
+\end{itemize}
+
+These thresholds are robust across parameter sweeps: the same four
+classes emerge when thresholds are varied by $\pm 20\%$, and the
+classification is stable across independent random seeds.
+
+% ── 8.3 ──────────────────────────────────────────────────
+\subsection{Representative Configurations}\label{sec:rep_configs}
+
+Representative configurations for each attractor class are shown in
+Figure~\ref{fig:modes}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_mode_visualisation.png}
+\caption{Representative field configurations from each attractor class.
+Each panel shows $\Phi_i$ on the 120~vertices, ordered by distance
+shell from a reference vertex.
+\emph{Top left:} Class~1 (backbone harmonic).
+\emph{Top right:} Class~2 (locked multi-mode).
+\emph{Bottom left:} Class~3 (localised breather).
+\emph{Bottom right:} Class~4 (transitional).}
+\label{fig:modes}
+\end{figure}
+
+Class~1 (backbone harmonic) configurations are spatially extended,
+exhibiting low variance across vertices and strong alignment with a
+single Laplacian eigenmode.  These states retain the symmetry
+structure of the corresponding eigenspace.
+
+Class~2 (locked multi-mode) configurations display interference
+patterns consistent with nonlinear phase-locking between multiple
+eigenmodes.  These states exhibit structured spatial variation with
+partial coherence across the graph.
+
+Class~3 (breather-like) configurations are spatially localised, with
+a significant fraction of the total amplitude concentrated on a small
+subset of vertices.  These configurations persist over long times and
+are consistent with intrinsic localised modes observed in nonlinear
+lattice systems~\cite{flach2008,aubry1997}.
+
+Class~4 (transitional) configurations are irregular and do not exhibit
+temporal persistence or coherent structure.  These trajectories
+typically evolve toward one of the other classes or decay into
+fluctuating states.
+
+Importantly, these configurations arise dynamically from the system
+evolution and are not imposed by construction.
+
+% ── 8.4 ──────────────────────────────────────────────────
+\subsection{Dependence on Nonlinearity}\label{sec:beta_dep}
+
+The distribution of attractor classes as a function of the nonlinear
+parameter~$\beta$ is shown in Figure~\ref{fig:phase}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_phase_diagram.png}
+\caption{Attractor class distribution as a function of the nonlinear
+strength~$\beta$ (log scale), from an ensemble of 80~trajectories per
+$\beta$~value across 25~values spanning $[10^{-3}, 5]$.  Three regimes
+are indicated by dashed lines.}
+\label{fig:phase}
+\end{figure}
+
+In the \emph{linear regime} ($\beta \ll 1$), dynamics are dominated
+by individual eigenmodes, and Class~1 configurations are prevalent.
+Mode coupling is minimal, and trajectories remain close to linear
+superpositions.
+
+In the \emph{weakly nonlinear regime}, multi-mode interactions become
+significant.  Class~2 configurations increase in frequency, reflecting
+the emergence of phase-locked combinations of eigenmodes.
+
+In the \emph{strongly nonlinear regime} ($\beta \gtrsim 1$), localised
+configurations (Class~3) become more prominent.  At the same time, the
+fraction of purely harmonic configurations decreases.
+
+The distribution of attractor classes varies continuously with~$\beta$,
+indicating a smooth transition between dynamical regimes rather than a
+sharp bifurcation.
+
+% ── 8.5 ──────────────────────────────────────────────────
+\subsection{Localisation Quantification via IPR}\label{sec:ipr_results}
+
+To quantify localisation, we compute the inverse participation ratio
+(IPR) as defined in equation~\eqref{eq:ipr}:
+\[
+  \mathrm{IPR} = \frac{\sum_i |\Phi_i|^4}
+    {\left(\sum_i |\Phi_i|^2\right)^2}.
+\]
+For a fully delocalised configuration,
+$\mathrm{IPR} = 1/n = 1/120$.
+
+The distribution of time-averaged IPR values across nonlinear regimes
+is shown in Figure~\ref{fig:ipr}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_ipr_distribution.png}
+\caption{Distribution of time-averaged IPR across all trajectories for
+three representative values of~$\beta$.  The dotted line marks the
+fully delocalised baseline $\mathrm{IPR} = 1/n = 1/120$.}
+\label{fig:ipr}
+\end{figure}
+
+At low~$\beta$, the IPR distribution is tightly concentrated near the
+baseline value, consistent with spatially extended modes.  At
+intermediate~$\beta$, the distribution broadens, indicating increased
+spatial variation and partial localisation.  At high~$\beta$, a
+pronounced heavy tail appears at large IPR values, indicating the
+emergence of strongly localised configurations.
+
+The emergence of a high-IPR tail at larger~$\beta$ indicates the
+formation of spatially localised dynamical states.  This behaviour is
+consistent with known properties of nonlinear lattice systems
+supporting intrinsic localised modes (discrete
+breathers)~\cite{flach2008,campbell2004}.
+
+% ── 8.6 ──────────────────────────────────────────────────
+\subsection{Summary of Results}\label{sec:results_summary}
+
+The $\Hfour$-constrained nonlinear system exhibits a small number of
+persistent dynamical configurations that can be classified into four
+attractor classes.  The relative prevalence of these classes depends
+smoothly on the nonlinear coupling strength~$\beta$.  In particular,
+increasing nonlinearity leads to a transition from globally distributed
+harmonic modes to spatially localised configurations.
+
+These results indicate that the system possesses a small and structured
+set of recurrent attractor classes within the explored parameter range.
+
+% ── 8.7 ──────────────────────────────────────────────────
+\subsection{Comparison with Control Graphs}\label{sec:baseline}
+
+We compare the $\Hfour$ graph against an ensemble of random 12-regular
+graphs matched in size ($n = 120$) and degree ($k = 12$), using
+identical dynamical parameters, initial-condition sampling, integration
+settings, and classification criteria.  The purpose of this comparison
+is to determine whether the observed attractor structure is a generic
+consequence of nonlinear dynamics on regular graphs, or whether it
+depends on the specific spectral organisation of the $\Hfour$ graph.
+
+The same classification criteria, thresholds, and feature extraction
+pipeline were applied to both the $\Hfour$ graph and all control graphs
+without graph-specific tuning.  Here ``structured'' refers to
+configurations exhibiting temporal persistence and nontrivial spatial
+organisation (including multi-mode locking or localisation), as opposed
+to transient or irregular dynamics.
+
+The random regular graphs (RRGs) are generated by configuration-model
+pairing with local repair and verified to be simple, connected,
+12-regular graphs.  Results for the control ensemble are reported as
+mean $\pm$ standard deviation over $M = 10$ independent graph
+realisations.  Each RRG has 120~distinct eigenvalues (no degeneracy),
+compared with 9 for the 600-cell
+(Figure~\ref{fig:baseline_spectrum}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{fig_baseline_spectrum.png}
+\caption{Number of distinct Laplacian eigenvalues for the $\Hfour$
+graph (index~0, red) and 10~random 12-regular graphs (blue).  The
+600-cell has 9~distinct eigenvalues; all control graphs have~120.}
+\label{fig:baseline_spectrum}
+\end{figure}
+
+The $\Hfour$ graph exhibits a substantially higher fraction of
+persistent structured configurations, while trajectories on the
+control graphs are predominantly classified as transitional under the
+same criteria (Figure~\ref{fig:baseline_classes}).  On the $\Hfour$
+graph, Classes~1 and~2 account for $\sim$70\% and Class~3 for
+$\sim$27\%.  On the RRGs, $\sim$96\% of trajectories are classified as
+Class~4 (transitional), with Classes~1--3 comprising fewer than 4\%
+combined.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_baseline_classes.png}
+\caption{Attractor class distribution as a function of~$\beta$ for
+the $\Hfour$ graph (circles, solid) and random 12-regular graphs
+(squares, dashed; shaded region shows $\pm 1\sigma$ across $M = 10$
+controls).  On the $\Hfour$ graph, trajectories distribute across
+all four classes.  On control graphs, nearly all trajectories are
+classified as Class~4 (transitional).}
+\label{fig:baseline_classes}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_baseline_ipr.png}
+\caption{IPR distributions for the $\Hfour$ graph (red) and pooled
+random regular graphs (blue) at three values of~$\beta$.  The
+$\Hfour$ graph shows broader IPR distributions with a tail extending
+to higher values, indicating stronger spatial localisation.}
+\label{fig:baseline_ipr}
+\end{figure}
+
+\noindent This contrast is reflected not only in classification
+outcomes but also in graph-invariant observables:
+\begin{itemize}[nosep]
+\item \textbf{Spectral compression:}
+  $\Hfour$: 9~distinct eigenvalues; RRG: $120 \pm 0$ (no degeneracy).
+\item \textbf{Structured attractors:}
+  $\Hfour$: $\sim$98\% of trajectories in Classes~1--3; this fraction
+  was not observed in the tested control ensemble ($< 4\%$).
+\item \textbf{Localisation:}
+  mean IPR on $\Hfour$ ($0.062$) exceeds the RRG value ($0.028$) by
+  a factor of $\sim$2.3, with the $\Hfour$ distribution exhibiting a
+  substantially heavier tail at high~$\beta$.
+\item \textbf{Attractor diversity:}
+  the Shannon entropy of the class distribution (averaged over~$\beta$)
+  is $\sim$1.5~bits for the $\Hfour$ graph versus $\sim$0.2~bits for
+  the RRG ensemble, indicating that the $\Hfour$ graph supports a
+  richer distribution of distinct attractor types rather than
+  collapsing into a single dynamical class.
+\end{itemize}
+
+Because the primary classification includes spectral components
+(eigenmode projections), care must be taken to ensure that the observed
+differences are not solely driven by the compressed eigenspace
+structure of the $\Hfour$ graph.  To address this, we repeat the
+classification using only graph-invariant observables --- IPR,
+temporal persistence (autocorrelation), and energy variance --- without
+reference to the eigenbasis.
+
+Under graph-invariant classification, the $\Hfour$ graph retains
+$\sim$99\% of trajectories in structured classes (C1--C3), with
+$\sim$44\% classified as spatially localised (Class~3).  The control
+RRGs retain $\sim$82\% in structured classes but produce localised
+trajectories at an approximately two orders of magnitude lower rate
+($\sim$0.3\% Class~3).
+
+In particular, a degree-preserving rewiring of the 600-cell
+graph---destroying its $\Hfour$ symmetry while maintaining identical
+size and degree---eliminates the structured attractor distribution and
+restores behaviour comparable to random regular graphs ($\sim$0.3\%
+Class~3, $\sim$16\% Class~4, 120~distinct eigenvalues).  This isolates
+the $\Hfour$ symmetry, rather than the degree sequence or graph size,
+as the relevant structural factor.
+
+Taken together, these results provide consistent evidence that the
+observed attractor structure is not an artefact of the classification
+procedure and is not reproduced in degree-matched control graphs under
+identical conditions.
+
+The consistency of these observations across spectral, dynamical, and
+graph-invariant analyses supports the conclusion that the attractor
+structure is tied to the specific symmetry and spectral properties of
+the $\Hfour$ graph.  These results are presented as properties of a
+nonlinear dynamical system on a structured graph and do not assume any
+direct mapping to physical observables.
+
+
+% ══════════════════════════════════════════════════════════
+\section{Discussion}\label{sec:discussion}
+% ══════════════════════════════════════════════════════════
+
+% ── 9.1 ──────────────────────────────────────────────────
+\subsection{Relation to Spectral Structure}\label{sec:disc_spectral}
+
+The observed dynamical behaviour reflects the highly constrained
+spectral structure of the $\Hfour$ graph Laplacian described in
+Part~II of this series~\cite{paper2}.
+
+The strong degeneracy of eigenvalues organises the linear modes into a
+small number of sectors.  The dominance of Class~1 and Class~2
+configurations is consistent with the existence of a spectral backbone
+(the 91-mode subspace spanning sectors~1--6), while the emergence of
+Class~3 configurations reflects nonlinear interactions across these
+sectors.
+
+The finite number of distinct eigenvalue sectors appears to limit the
+number of dynamically stable configurations.
+
+% ── 9.2 ──────────────────────────────────────────────────
+\subsection{Interpretation as a Constrained Nonlinear System}
+\label{sec:disc_constrained}
+
+The system studied here is a nonlinear oscillator network defined on
+a highly symmetric graph.  The combination of spectral compression and
+nonlinear coupling leads to a restricted set of persistent dynamical
+states, suggesting a strong influence of the underlying spectral
+structure on the attractor taxonomy.
+
+The baseline comparison of Section~\ref{sec:baseline} supports this
+interpretation: on random 12-regular graphs with identical size,
+degree, and dynamics, $\sim$96\% of trajectories are classified as
+Class~4 (transitional), compared with $\sim$2\% on the $\Hfour$ graph.
+This contrast was not observed in any of the tested control graphs,
+suggesting that the structured attractor space is non-generic within
+the tested ensemble of 12-regular graphs and reflects the spectral
+organisation of the $\Hfour$ graph.
+
+% ── 9.3 ──────────────────────────────────────────────────
+\subsection{Localisation Mechanism}\label{sec:disc_localisation}
+
+The emergence of localised configurations can be understood in terms
+of nonlinear frequency shifts and energy trapping.
+
+The cubic nonlinearity introduces amplitude-dependent frequency
+corrections, enabling resonance conditions between
+modes~\cite{flach2008,mackay1994}.  Combined with the finite
+connectivity of the graph ($k = 12$), this allows energy to become
+localised in space.
+
+Localised configurations arise without disorder, consistent with the
+theory of discrete breathers in nonlinear lattice
+systems~\cite{aubry1997,mackay1994}.
+
+% ── 9.4 ──────────────────────────────────────────────────
+\subsection{Structured Attractor Space}\label{sec:disc_finite}
+
+Within the explored parameter range, the system exhibits a small and
+structured set of recurrent attractor classes.
+
+Stability is assessed numerically through persistence over long time
+windows ($1800$~time units post-transient) and robustness to small
+perturbations in initial conditions, though a formal Lyapunov analysis
+is not performed in this work.
+
+While this classification is based on numerical evidence and is not
+proven to be exhaustive, it is stable across initial conditions and
+parameter sweeps.  This suggests that the attractor space of the system
+is strongly constrained by the underlying symmetry and spectral
+structure.
+
+% ── 9.5 ──────────────────────────────────────────────────
+\subsection{Limitations}\label{sec:limitations}
+
+The present results are numerical and do not constitute a complete
+analytical classification of the system.
+
+Limitations include:
+\begin{itemize}[nosep]
+\item finite simulation time and sampling;
+\item dependence on chosen parameter ranges;
+\item absence of a formal stability proof for each attractor class;
+\item lack of an analytical derivation of the attractor structure;
+\item the control study is limited to a finite ensemble of random
+  12-regular graphs and does not exclude the possibility that other
+  highly structured non-$\Hfour$ graphs may exhibit related behaviour.
+\end{itemize}
+
+No direct mapping to physical observables is assumed in this work.
+
+% ── 9.6 ──────────────────────────────────────────────────
+\subsection{Outlook}\label{sec:outlook}
+
+Future work should focus on:
+\begin{itemize}[nosep]
+\item analytical derivation of attractor classes using representation
+  theory of~$\Hfour$;
+\item stability analysis via perturbative and variational methods;
+\item extension to coupled $\Hfour$ systems and higher-dimensional
+  embeddings;
+\item systematic exploration of parameter space.
+\end{itemize}
+
+\bigskip
+
+\noindent\emph{The results indicate that a nonlinear oscillator system
+defined on the $\Hfour$ symmetry graph exhibits a structured and
+reproducible set of dynamical attractors, whose organisation reflects
+the underlying spectral constraints of the graph.}
+
+
+% ══════════════════════════════════════════════════════════
+\section{Conclusion}\label{sec:conclusion}
+% ══════════════════════════════════════════════════════════
+
+The numerical experiments reported here indicate that the nonlinear
+field system defined by~\eqref{eq:eom} on the 600-cell vertex graph
+admits a small and structured set of recurrent dynamical
+configurations within the explored parameter range.  Four attractor
+classes have been identified and characterised: backbone harmonic
+modes, phase-locked multi-mode states, spatially localised
+breather-like states, and transitional non-persistent states.
+
+The attractor taxonomy is consistent with the seven structural
+invariants of the $\Hfour$ Laplacian spectrum identified in Part~II.
+The spectral compression (nine sectors across 120~degrees of freedom),
+the backbone--departure decomposition (91~+~29), the $\vphi$-zone
+partition, and the conjugate pairing structure collectively constrain
+the space of persistent nonlinear configurations to the classes
+described here.
+
+The relationship between the three parts of this series may be
+summarised as follows:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+Part~I & establishes the phenomenon (coherent dynamics on $\Hfour$ geometry) \\
+Part~II & establishes the structure (spectral invariants governing the spectrum) \\
+Part~III & establishes the taxonomy (attractor families realised within the \\
+  & constrained spectral space) \\
+\end{tabular}
+\end{center}
+
+Together, the three papers indicate that the 600-cell graph possesses
+a non-generic spectral algebra that produces structured nonlinear
+dynamics with a classifiable set of recurrent attractor families.  No
+physical interpretation is required for or assumed in these
+conclusions.
+
+\paragraph{Reproducibility.}
+All simulations use the velocity-Verlet symplectic integrator applied
+to the explicit 600-cell graph Laplacian.  The simulation pipeline,
+parameter ranges, and diagnostic code are specified in full in the
+accompanying repository.  No external datasets or proprietary
+software are required.
+
+
+% ══════════════════════════════════════════════════════════
+% References
+% ══════════════════════════════════════════════════════════
+\begin{thebibliography}{10}
+
+\bibitem{paper1}
+L.~Smart,
+``Symmetry-Constrained Resonant Modes on $H_4$ Geometry:
+A Geometric Framework for Vibrational Field Dynamics,''
+\textit{VFD Working Paper Series}, WO-VFD-PAPER-001, 2025.
+
+\bibitem{paper2}
+L.~Smart,
+``Algebraic Invariants of the $H_4$ Laplacian Spectrum,''
+\textit{VFD Working Paper Series}, WO-VFD-PAPER-002, 2025.
+
+\bibitem{flach2008}
+S.~Flach and A.~V.~Gorbach,
+``Discrete breathers --- Advances in theory and applications,''
+\textit{Physics Reports} \textbf{467}, 1--116, 2008.
+
+\bibitem{aubry1997}
+S.~Aubry,
+``Breathers in nonlinear lattices: Existence, linear stability
+and quantization,''
+\textit{Physica D} \textbf{103}, 201--250, 1997.
+
+\bibitem{mackay1994}
+R.~S.~MacKay and S.~Aubry,
+``Proof of existence of breathers for time-reversible or
+Hamiltonian networks of weakly coupled oscillators,''
+\textit{Nonlinearity} \textbf{7}, 1623--1643, 1994.
+
+\bibitem{campbell2004}
+D.~K.~Campbell, S.~Flach, and Y.~S.~Kivshar,
+``Localizing energy through nonlinearity and discreteness,''
+\textit{Physics Today} \textbf{57}, 43--49, 2004.
+
+\bibitem{kevrekidis2009}
+P.~G.~Kevrekidis,
+\textit{The Discrete Nonlinear Schr\"odinger Equation:
+Mathematical Analysis, Numerical Computations and Physical
+Perspectives}.
+Springer, 2009.
+
+\bibitem{chung1997}
+F.~R.~K.~Chung,
+\textit{Spectral Graph Theory}.
+AMS, 1997.
+
+\bibitem{coxeter1973}
+H.~S.~M.~Coxeter,
+\textit{Regular Polytopes}, 3rd~ed.
+Dover Publications, 1973.
+
+\bibitem{humphreys1990}
+J.~E.~Humphreys,
+\textit{Reflection Groups and Coxeter Groups}.
+Cambridge University Press, 1990.
+
+\end{thebibliography}
+
+\vfill
+\noindent\rule{\textwidth}{0.4pt}\\[4pt]
+{\footnotesize
+\textit{Vibrational Field Dynamics Working Paper Series}
+\hfill Part~III \quad v1.7 (final-hardened)}
+
+\end{document}

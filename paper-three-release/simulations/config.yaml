@@ -1,0 +1,31 @@
+# VFD Simulation Configuration
+# WO-VFD-SIM-001
+
+simulation:
+  dt: 0.01
+  T: 1000
+  save_interval: 10  # save diagnostics every N steps
+
+parameters:
+  omega0: 1.0
+  lambda_values: [0.5, 1.0, 2.0]
+  beta_values: [0.0, 0.1, 0.5, 1.0]
+
+graphs:
+  - 600cell
+  - control1
+  - control2
+  - control3
+
+initial_conditions:
+  - IC1  # single-vertex excitation
+  - IC2  # random small field
+  - IC3  # low-mode seed
+  - IC4  # local H3 neighbourhood seed
+
+tolerances:
+  adjacency_epsilon: 1.0e-6
+  energy_drift_warn: 1.0e-4
+
+output:
+  results_dir: results
