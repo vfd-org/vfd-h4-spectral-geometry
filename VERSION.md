@@ -1,5 +1,13 @@
 # Version History
 
+## v1.3 — Paper IV
+
+Includes:
+- Paper IV: Selection Rules and Constraints on Nonlinear Attractors in the H₄ System (v1.3, submission-ready)
+- Mode-coupling constraint matrix analysis (`paper4_selection_rules.py`)
+- Figure generation pipeline (`paper4_plot_figures.py`)
+- 5 figures (coupling matrix, shell occupancy, stability hierarchy, control comparison, constraint summary)
+
 ## v1.2 — Paper III (Release)
 
 Includes:

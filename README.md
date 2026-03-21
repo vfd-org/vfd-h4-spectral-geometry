@@ -35,15 +35,25 @@ The space of persistent nonlinear configurations is classified. Four attractor c
 - [Attractor figures](papers/paper-003-h4-attractors/figures/)
 - [Release package](paper-three-release/)
 
+### Paper IV — Selection Rules and Constraints on Nonlinear Attractors in the H₄ System
+**Focus:** Empirical selection rules governing attractor formation
+
+The attractor space is shown to be not only structured but constrained. A 9×9 mode-coupling matrix reveals that stable attractors involve only 21 of 36 possible spectral sector pairings. Backbone sectors activate at 2.6× the rate of departure sectors, and no stable attractors are composed exclusively of departure modes. A stability hierarchy correlates temporal persistence with spectral composition. Control comparisons confirm the coupling structure is absent on degree-matched random graphs.
+
+- [Paper IV (PDF)](papers/paper-004-h4-selection/Selection_Rules_and_Constraints_on_Nonlinear_Attractors_in_the_H4_System.pdf)
+- [Paper IV (LaTeX source)](papers/paper-004-h4-selection/paper4_h4_selection_rules.tex)
+- [Selection rule figures](papers/paper-004-h4-selection/figures/)
+
 ## Relationship
 
 ```
 Paper I   establishes the phenomenon  (coherent dynamics on H₄ geometry)
 Paper II  establishes the structure   (spectral invariants governing the spectrum)
 Paper III establishes the taxonomy    (attractor families within the constrained space)
+Paper IV  establishes the rules       (selection constraints on attractor formation)
 ```
 
-Together they indicate that the 600-cell graph possesses a non-generic spectral algebra that produces structured nonlinear dynamics with a classifiable set of recurrent attractor families, as verified against degree-matched control graphs.
+Together they indicate that the 600-cell graph possesses a non-generic spectral algebra that appears to constrain nonlinear dynamics from the level of individual eigenvalues through attractor classification to the selection of specific configurations, as verified against degree-matched control graphs.
 
 ## Reproducibility
 
@@ -55,8 +65,9 @@ All simulations and spectral computations are available in [`/simulations`](simu
 - Control graph generation and baseline comparison
 - Attractor classification and diagnostic pipelines
 - Graph-invariant classifier validation
+- Mode-coupling constraint analysis (Paper IV)
 
-Requirements: Python 3.8+, NumPy, SciPy, Matplotlib. PyTorch with CUDA required for GPU-accelerated Paper III simulations.
+Requirements: Python 3.8+, NumPy, SciPy, Matplotlib. PyTorch with CUDA required for GPU-accelerated Paper III/IV simulations.
 
 ## Key Results
 
@@ -70,6 +81,9 @@ Requirements: Python 3.8+, NumPy, SciPy, Matplotlib. PyTorch with CUDA required 
 | Structured trajectories (H₄ vs RRG) | III | 98% vs <4% |
 | Localised states (invariant classifier) | III | 44% vs 0.3% |
 | Spectral compression (H₄ vs RRG) | III | 9 vs 120 eigenvalues |
+| Observed sector pairings | IV | 21 / 36 (15 absent) |
+| Backbone activation ratio | IV | 2.6× over departure sectors |
+| Stable attractors (H₄ vs controls) | IV | 1165 vs ~5 per control |
 | Square multiplicity sequence | II | 1², 2², 3², 4², 5², 6² |
 | Spectral backbone | II | 88 = 1 + 3 × 29 |
 | φ-cancellation | II | Σb = 0, Σ(b×mult) = 0 |
