@@ -1,5 +1,12 @@
 # Version History
 
+## v1.4 — Paper V
+
+Includes:
+- Paper V: Attractor Invariants and Scaling Relations in the H₄ System (v1.1, final-hardened)
+- Invariant analysis script (`paper5_invariants.py`)
+- 4 figures (invariant structure, scaling relations, correlation matrix, geometry-spectrum)
+
 ## v1.3 — Paper IV
 
 Includes:

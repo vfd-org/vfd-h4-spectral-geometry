@@ -44,6 +44,15 @@ The attractor space is shown to be not only structured but constrained. A 9×9 m
 - [Paper IV (LaTeX source)](papers/paper-004-h4-selection/paper4_h4_selection_rules.tex)
 - [Selection rule figures](papers/paper-004-h4-selection/figures/)
 
+### Paper V — Attractor Invariants and Scaling Relations in the H₄ System
+**Focus:** Invariant relationships and quantitative organisation of the attractor space
+
+The attractor space exhibits reproducible quantitative relationships between spectral composition, spatial localisation, and temporal persistence. The backbone fraction concentrates at 0.84 ± 0.13 across 1165 stable attractors. Persistence correlates strongly with backbone dominance (Spearman r = 0.79), localisation increases with spectral complexity (r = 0.47), and these relationships evolve smoothly with β.
+
+- [Paper V (PDF)](papers/paper-005-h4-invariants-scaling/Attractor_Invariants_and_Scaling_Relations_in_the_H4System.pdf)
+- [Paper V (LaTeX source)](papers/paper-005-h4-invariants-scaling/paper5_h4_invariants.tex)
+- [Invariant figures](papers/paper-005-h4-invariants-scaling/figures/)
+
 ## Relationship
 
 ```
@@ -51,9 +60,10 @@ Paper I   establishes the phenomenon  (coherent dynamics on H₄ geometry)
 Paper II  establishes the structure   (spectral invariants governing the spectrum)
 Paper III establishes the taxonomy    (attractor families within the constrained space)
 Paper IV  establishes the rules       (selection constraints on attractor formation)
+Paper V   establishes the invariants  (quantitative relationships within the attractor space)
 ```
 
-Together they indicate that the 600-cell graph possesses a non-generic spectral algebra that appears to constrain nonlinear dynamics from the level of individual eigenvalues through attractor classification to the selection of specific configurations, as verified against degree-matched control graphs.
+Together they indicate that the 600-cell graph possesses a non-generic spectral algebra that appears to constrain and organise nonlinear dynamics from the level of individual eigenvalues through attractor classification and selection rules to reproducible invariant relationships, as verified against degree-matched control graphs.
 
 ## Reproducibility
 
@@ -84,6 +94,9 @@ Requirements: Python 3.8+, NumPy, SciPy, Matplotlib. PyTorch with CUDA required 
 | Observed sector pairings | IV | 21 / 36 (15 absent) |
 | Backbone activation ratio | IV | 2.6× over departure sectors |
 | Stable attractors (H₄ vs controls) | IV | 1165 vs ~5 per control |
+| Backbone fraction (invariant) | V | 0.84 ± 0.13 |
+| Persistence ↔ backbone correlation | V | Spearman r = 0.79 |
+| IPR ↔ spectral entropy correlation | V | Spearman r = 0.47 |
 | Square multiplicity sequence | II | 1², 2², 3², 4², 5², 6² |
 | Spectral backbone | II | 88 = 1 + 3 × 29 |
 | φ-cancellation | II | Σb = 0, Σ(b×mult) = 0 |
